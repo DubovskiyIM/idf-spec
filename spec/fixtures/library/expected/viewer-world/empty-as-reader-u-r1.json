@@ -1,0 +1,12 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "Empty Φ + reader view = пустые namespace'ы (User/Book/Loan все в visibleFields reader'а)."
+  },
+  "viewerWorld": {
+    "User": {},
+    "Book": {},
+    "Loan": {}
+  }
+}
