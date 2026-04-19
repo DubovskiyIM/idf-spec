@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://idf-spec.org/v0.1/artifact.schema.json",
+  "title": "IDF Artifact (v0.1)",
+  "description": "Output crystallize(intents, ontology, projection, viewer, viewerWorld). Тип данных, не результат рендеринга. Один artifact читается всеми материализациями (pixel/voice/agent/document) — но материализации Reserved L3 в v0.1.",
+  "type": "object",
+  "required": ["projectionId", "archetype", "viewer", "slots"],
+  "additionalProperties": false,
+  "properties": {
+    "_meta": {
+      "description": "Метаданные fixture-файла (не часть формата). Принимаются парсером без эффекта.",
+      "type": "object"
+    },
+    "projectionId": {
+      "description": "ID проекции, из которой выведен artifact.",
+      "type": "string"
+    },
+    "archetype": {
+      "description": "Финальный архетип после фазы 1 (deriveProjections). Не 'auto'.",
+      "enum": ["feed", "catalog", "detail", "form", "canvas", "dashboard", "wizard"]
+    },
+    "viewer": {
+      "description": "Имя роли, для которой кристаллизован artifact. Artifact viewer-специфичен (см. axiom 2).",
+      "type": "string"
+    },
+    "slots": {
+      "description": "Именованные контейнеры содержимого. Структура зависит от archetype; нормативные ключи слотов на архетип см. в spec/03-objects/artifact.md и spec/04-algebra/crystallize.md.",
+      "type": "object"
+    },
+    "witnesses": {
+      "description": "Reserved для v0.2+ (basis: heuristic | pattern-bank | anchored). v0.1 артефакт MAY содержать пустой массив или отсутствие поля; не нормируется.",
+      "type": "array"
+    },
+    "shape": {
+      "description": "Reserved для v0.2+ (timeline | directory | default).",
+      "type": "string"
+    },
+    "patternAnnotations": {
+      "description": "Reserved для v0.2+ (Pattern Bank annotations).",
+      "type": "array"
+    }
+  }
+}
