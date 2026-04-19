@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "crystallize(my-loans, viewer=reader-u-r1, viewerWorld=borrow-cycle-as-reader-u-r1). Reader видит свой Loan l1 (active); footer.actions содержит return_book (transition → standard). primaryField для Loan — status (первое не-id не-FK поле)."
+  },
+  "projectionId": "my-loans",
+  "archetype": "catalog",
+  "viewer": "reader",
+  "slots": {
+    "header": {
+      "title": "Loan"
+    },
+    "body": {
+      "items": [
+        { "id": "l1", "userId": "u-r1", "bookId": "b1", "status": "active", "borrowedAt": "2026-04-03T14:00:00.000Z" }
+      ],
+      "itemDisplay": { "primary": "status", "secondary": "borrowedAt" }
+    },
+    "footer": {
+      "actions": [
+        { "intentId": "return_book", "label": "return_book", "confirmation": "standard" }
+      ]
+    },
+    "toolbar": {}
+  }
+}

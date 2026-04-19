@@ -1,0 +1,32 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "crystallize(book-catalog, viewer=librarian). Librarian видит actions для remove/update_book_metadata (упорядочены по intent.id ASC) + toolbar.create для add_book."
+  },
+  "projectionId": "book-catalog",
+  "archetype": "catalog",
+  "viewer": "librarian",
+  "slots": {
+    "header": {
+      "title": "Book"
+    },
+    "body": {
+      "items": [
+        { "id": "b1", "title": "The Pragmatic Programmer", "author": "Hunt & Thomas", "isbn": "978-0201616224" },
+        { "id": "b2", "title": "Domain-Driven Design", "author": "Eric Evans", "isbn": "978-0321125217" },
+        { "id": "b3", "title": "Designing Data-Intensive Applications", "author": "Martin Kleppmann" }
+      ],
+      "itemDisplay": { "primary": "title", "secondary": "author" }
+    },
+    "footer": {
+      "actions": [
+        { "intentId": "remove_book", "label": "remove_book", "confirmation": "destructive" },
+        { "intentId": "update_book_metadata", "label": "update_book_metadata", "confirmation": "standard" }
+      ]
+    },
+    "toolbar": {
+      "create": { "intentId": "add_book", "label": "add_book", "confirmation": "standard" }
+    }
+  }
+}

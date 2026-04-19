@@ -1,0 +1,22 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "crystallize(borrow-form, viewer=reader-u-r1). Form архетип; intents.length === 1 → header.title = intent.id. mergeProjections заменил body на authored форму со списком имён полей ['bookId']."
+  },
+  "projectionId": "borrow-form",
+  "archetype": "form",
+  "viewer": "reader",
+  "slots": {
+    "header": {
+      "title": "borrow_book"
+    },
+    "body": {
+      "_authored": true,
+      "fields": ["bookId"]
+    },
+    "footer": {
+      "submit": { "intentId": "borrow_book", "label": "borrow_book", "confirmation": "standard" }
+    }
+  }
+}

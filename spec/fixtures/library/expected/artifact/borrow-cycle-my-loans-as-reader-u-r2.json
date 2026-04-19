@@ -1,0 +1,25 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "crystallize(my-loans, viewer=reader-u-r2). Bob не имеет своих Loan (viewerWorld.Loan пуст), но action return_book доступен (canExecute) — actions в catalog footer глобальны для проекции, не per-item."
+  },
+  "projectionId": "my-loans",
+  "archetype": "catalog",
+  "viewer": "reader",
+  "slots": {
+    "header": {
+      "title": "Loan"
+    },
+    "body": {
+      "items": [],
+      "itemDisplay": { "primary": "status", "secondary": "borrowedAt" }
+    },
+    "footer": {
+      "actions": [
+        { "intentId": "return_book", "label": "return_book", "confirmation": "standard" }
+      ]
+    },
+    "toolbar": {}
+  }
+}

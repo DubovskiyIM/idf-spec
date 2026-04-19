@@ -41,9 +41,15 @@ Output — artifact (см. [`03-objects/artifact.md`](../03-objects/artifact.md)
 
 ### Фаза 2: mergeProjections
 
-Если `projection.slots` задано — применить deep-merge поверх slot-результатов фаз 3+: значения из `projection.slots` имеют приоритет над derived-значениями. Поле `_authored: true` в любом slot-объекте — маркер «зафиксировано автором» для forward-compatibility с фазами 4-5 (Reserved L4).
+Если `projection.slots` задано — применить deep-merge поверх slot-результатов фаз 3+: значения из `projection.slots` имеют приоритет над derived-значениями.
 
-В v0.1 фаз 4-5 нет; mergeProjections применяется на artifact после фазы 3. Маркер `_authored` сохраняется в финальном artifact.
+**Семантика merge:**
+- На уровне slot-ключей (`header`, `body`, `footer`, `toolbar`, ...) — recursive deep-merge.
+- На уровне свойств внутри slot-объектов — recursive deep-merge.
+- **Массивы заменяются целиком**, не конкатенируются (стандартная JSON-merge семантика). Если authored задаёт `body.fields = ["bookId"]`, derived `body.fields = [{name:"bookId", ...}]` затирается полностью.
+- Скалярные значения (string, number, boolean) — заменяются на authored.
+
+Поле `_authored: true` в любом slot-объекте — маркер «зафиксировано автором» для forward-compatibility с фазами 4-5 (Reserved L4). В v0.1 фаз 4-5 нет; mergeProjections применяется на artifact после фазы 3. Маркер `_authored` сохраняется в финальном artifact.
 
 ### Фаза 3: assignToSlots
 
