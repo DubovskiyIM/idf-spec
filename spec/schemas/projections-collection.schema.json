@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://idf-spec.org/v0.1/projections-collection.schema.json",
+  "title": "Collection of projections (fixture wrapper)",
+  "description": "Wrapper-схема для fixture-файлов projections.json. Не часть нормативного формата.",
+  "type": "object",
+  "required": ["_meta", "projections"],
+  "additionalProperties": false,
+  "properties": {
+    "_meta":       { "type": "object" },
+    "projections": {
+      "type": "array",
+      "items": { "$ref": "projection.schema.json" }
+    }
+  }
+}

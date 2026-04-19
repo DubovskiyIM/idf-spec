@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://idf-spec.org/v0.1/projection.schema.json",
+  "title": "IDF Projection (v0.1)",
+  "description": "Авторский контракт: какие intent'ы и сущности образуют один логически связный вид. Input для crystallize.",
+  "type": "object",
+  "required": ["id", "intents"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Стабильный ID проекции, kebab-case.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "archetype": {
+      "description": "Предпочтительный архетип. 'auto' — оставить выбор кристаллизатору. v0.1 нормирует все семь, но fixture-векторами покрыты только catalog/detail/form/dashboard.",
+      "enum": ["auto", "feed", "catalog", "detail", "form", "canvas", "dashboard", "wizard"],
+      "default": "auto"
+    },
+    "intents": {
+      "description": "Список intent.id, входящих в проекцию.",
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "entity": {
+      "description": "Опционально: основная сущность проекции (для catalog/detail/form). Если не задана — выводится crystallize-фазой 1 (deriveProjections).",
+      "type": "string"
+    },
+    "slots": {
+      "description": "Опциональный slot-override — авторская фиксация конкретных слотов артефакта. Применяется в crystallize фазе 2 (mergeProjections), bypass'я последующие фазы для соответствующих слотов. Структура — соответствует artifact.slots.",
+      "type": "object"
+    },
+    "patterns": {
+      "description": "Reserved для v0.2+ (Pattern Bank preference). v0.1 принимает поле как opaque object; не использует в crystallize.",
+      "type": "object"
+    }
+  }
+}
