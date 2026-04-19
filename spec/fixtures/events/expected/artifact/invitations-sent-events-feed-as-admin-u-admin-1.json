@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "crystallize(events-feed, viewer=admin, viewerWorld=invitations-sent-as-admin). Feed архетип; intents=[] → пусто footer/toolbar. ВНИМАНИЕ: feed lightly-tested в спеке — implementer choice (entries как catalog body.items, sorted by id ASC; idf-go использует тот же сорт)."
+  },
+  "projectionId": "events-feed",
+  "archetype": "feed",
+  "viewer": "admin",
+  "slots": {
+    "body": {
+      "entries": [
+        { "id": "e1", "title": "Quarterly Planning", "organizerId": "u-org-1", "venueId": "v1", "startsAt": "2026-05-01T14:00:00.000Z", "endsAt": "2026-05-01T16:00:00.000Z", "status": "draft" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "rsvp-cycle + Alice (u-att-1): видит свой User, Venue (ref), Event пусто; свой Attendee a1 (accepted)."
+  },
+  "viewerWorld": {
+    "User": {
+      "u-att-1": { "id": "u-att-1", "name": "Alice Attendee" }
+    },
+    "Venue": {
+      "v1": { "id": "v1", "name": "Conference Room A", "capacity": 30 },
+      "v2": { "id": "v2", "name": "Auditorium", "capacity": 200 }
+    },
+    "Event": {},
+    "Attendee": {
+      "a1": { "id": "a1", "eventId": "e1", "userId": "u-att-1", "status": "accepted", "respondedAt": "2026-04-04T11:00:00.000Z" }
+    }
+  }
+}

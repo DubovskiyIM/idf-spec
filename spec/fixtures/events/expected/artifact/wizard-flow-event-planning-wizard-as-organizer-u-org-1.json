@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "crystallize(event-planning-wizard, viewer=organizer). Wizard архетип; slots.body.steps — массив step-объектов в исходном порядке projection.intents с {intentId, label, isCommit, confirmation}. confirm_event_schedule имеет isCommit: true (его effects содержат kind: commit)."
+  },
+  "projectionId": "event-planning-wizard",
+  "archetype": "wizard",
+  "viewer": "organizer",
+  "slots": {
+    "body": {
+      "steps": [
+        { "intentId": "start_event_planning",    "label": "start_event_planning",    "isCommit": false, "confirmation": "standard" },
+        { "intentId": "add_event_details",       "label": "add_event_details",       "isCommit": false, "confirmation": "standard" },
+        { "intentId": "confirm_event_schedule",  "label": "confirm_event_schedule",  "isCommit": true,  "confirmation": "standard" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "Второй эталонный домен events: User, Venue (reference), Event (owned by organizerId), Attendee (owned by userId). 3 роли: attendee, organizer, admin. Нагружает feed/wizard архетипы и commit α."
+  },
+  "entities": {
+    "User": {
+      "kind": "internal",
+      "ownerField": "id",
+      "fields": {
+        "id":   { "type": "string", "required": true },
+        "name": { "type": "string", "required": true }
+      }
+    },
+    "Venue": {
+      "kind": "reference",
+      "fields": {
+        "id":       { "type": "string", "required": true },
+        "name":     { "type": "string", "required": true },
+        "capacity": { "type": "number", "required": true }
+      }
+    },
+    "Event": {
+      "kind": "internal",
+      "ownerField": "organizerId",
+      "fields": {
+        "id":          { "type": "string",   "required": true },
+        "title":       { "type": "string",   "required": true },
+        "organizerId": { "type": "string",   "required": true, "references": "User" },
+        "venueId":     { "type": "string",   "references": "Venue" },
+        "startsAt":    { "type": "datetime" },
+        "endsAt":      { "type": "datetime" },
+        "status":      { "type": "enum", "values": ["draft", "scheduled", "cancelled"], "required": true }
+      }
+    },
+    "Attendee": {
+      "kind": "internal",
+      "ownerField": "userId",
+      "fields": {
+        "id":          { "type": "string",   "required": true },
+        "eventId":     { "type": "string",   "required": true, "references": "Event" },
+        "userId":      { "type": "string",   "required": true, "references": "User" },
+        "status":      { "type": "enum", "values": ["invited", "accepted", "declined", "present"], "required": true },
+        "respondedAt": { "type": "datetime" }
+      }
+    }
+  },
+  "roles": {
+    "attendee": {
+      "visibleFields": {
+        "User":     ["id", "name"],
+        "Venue":    "*",
+        "Event":    "*",
+        "Attendee": "*"
+      },
+      "canExecute": ["accept_invite", "decline_invite"]
+    },
+    "organizer": {
+      "visibleFields": {
+        "User":     ["id", "name"],
+        "Venue":    "*",
+        "Event":    "*",
+        "Attendee": "*"
+      },
+      "canExecute": ["create_event", "edit_event", "cancel_event", "invite_user", "start_event_planning", "add_event_details", "confirm_event_schedule"]
+    },
+    "admin": {
+      "base": "admin",
+      "visibleFields": {
+        "User":     "*",
+        "Venue":    "*",
+        "Event":    "*",
+        "Attendee": "*"
+      },
+      "canExecute": ["create_event", "edit_event", "cancel_event", "invite_user", "accept_invite", "decline_invite", "start_event_planning", "add_event_details", "confirm_event_schedule"]
+    }
+  }
+}
