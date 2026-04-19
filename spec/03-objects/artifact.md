@@ -62,15 +62,20 @@ JSON Schema: [`schemas/artifact.schema.json`](../schemas/artifact.schema.json).
 | `slots.body.sections` | Массив `{projectionId}` references на другие проекции (композиция sub-artifact'ов — Reserved L4; в v0.1 sections — пустой массив или explicit references). |
 | `slots.toolbar.actions` | Массив `{intentId, label, confirmation}` глобальных действий. |
 
-### feed, canvas, wizard (Lightly-tested)
+### feed (нормативно с v0.1.5)
 
-Минимальная нормативная структура:
+- `slots.body.entries` — массив записей entity, упорядоченный по первому datetime-полю DESC (или id ASC если datetime отсутствует). См. [`04-algebra/crystallize.md`](../04-algebra/crystallize.md) фаза 3 / feed.
+- `slots.footer`, `slots.toolbar` — опускаются если `intents=[]` (read-only feed).
 
-- **feed**: `slots.body.entries` — массив записей (структура entries — opaque в v0.1).
-- **canvas**: `slots.body.canvasRef` — opaque reference на host-rendered canvas (string).
-- **wizard**: `slots.body.steps` — массив step-описаний (структура — opaque в v0.1).
+### wizard (нормативно с v0.1.5)
 
-Implementer MUST поддерживать минимальную структуру в crystallize; conformance проверяется только fixture-векторами для catalog/detail/form/dashboard.
+- `slots.body.steps` — массив `{intentId, label, confirmation, isCommit}` для каждого `projection.intents[i]` в исходном порядке. `isCommit: true` если intent.effects содержит `kind: "commit"`.
+
+### canvas (Lightly-tested)
+
+- `slots.body.canvasRef` ← `projection.id` (opaque host hint)
+
+Conformance проверяется fixture-векторами для catalog/detail/form/dashboard (library) и feed/wizard (events). Canvas — без fixture в v0.1.
 
 ## Composition (Reserved L4)
 
