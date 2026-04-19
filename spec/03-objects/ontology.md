@@ -98,11 +98,9 @@ ontology.roles.reader = {
 
 ### role.base
 
-В v0.1 нормировано **частично**: значение `"admin"` имеет нормативную семантику (см. [`04-algebra/filter-world.md`](../04-algebra/filter-world.md) priority 0 — admin-override row-filter). Прочие значения (`owner | viewer | agent | observer`) — accepted как opaque, без поведенческих эффектов на L1+L2.
+В v0.1 нормировано **частично**: значение `"admin"` имеет нормативную семантику (см. [`04-algebra/filter-world.md`](../04-algebra/filter-world.md) priority 1 — admin-override row-filter). Прочие значения (`owner | viewer | agent | observer`) — accepted как opaque, без поведенческих эффектов на L1+L2.
 
-**Spec-extension:** манифест v2 §8.2 перечисляет четыре базы (`owner | viewer | agent | observer`); `"admin"` — пятое значение, добавленное спецификацией для нормировки admin-pattern (роль видит все записи без owner-проверки). Resolution в манифесте v2.1 — см. [`feedback/manifesto-v2.md`](../../feedback/manifesto-v2.md).
-
-Парсер MUST принимать любую строку в `role.base`. Спека гарантирует поведенческую семантику только для `"admin"`; прочие — Reserved L4 (вместе с preapproval guard для `agent`, observer-invariant и т.д.).
+Манифест v2 §8.2 определяет пять баз (`owner | viewer | agent | observer | admin`); `admin` нормирован спецификацией. Парсер MUST принимать любую строку в `role.base` (манифест устроен как открытое множество прецедентов). Спека гарантирует поведенческую семантику только для `"admin"`; прочие — Reserved L4 (вместе с preapproval guard для `agent`, observer-invariant и т.д.).
 
 ### role.scope
 

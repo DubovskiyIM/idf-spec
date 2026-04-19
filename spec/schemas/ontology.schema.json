@@ -124,7 +124,7 @@
           "type": "object"
         },
         "base": {
-          "description": "Base-таксономия роли. Манифест §8.2 нормирует четыре значения (owner | viewer | agent | observer); spec-extension v0.1.1 добавляет 'admin' с нормативной семантикой row-override (см. spec/04-algebra/filter-world.md priority 1). Прочие значения принимаются opaque без поведенческого эффекта в L1+L2.",
+          "description": "Base-таксономия роли. Манифест §8.2 определяет пять классов: owner | viewer | agent | observer | admin. Спека v0.1.2 реализует поведенческую семантику только для 'admin' (row-override в filterWorldForRole priority 1); прочие — Reserved L4 (вместе с preapproval guard для agent, observer-invariant). Любая строка accepted (манифест устроен как открытое множество прецедентов).",
           "type": "string"
         }
       }

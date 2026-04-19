@@ -33,7 +33,7 @@ filterWorldForRole(world, viewer, ontology) → viewerWorld
 
 Если `viewer.role.base === "admin"` — row-filter не применяется: видны все записи `world[E]`. Применить column-filter (см. ниже).
 
-Это нормирует admin-pattern: роли с административной функцией видят все записи независимо от ownership. **Spec-extension манифеста v2 §8.2**: манифест перечисляет четыре базы (`owner | viewer | agent | observer`); `"admin"` — пятое значение, добавленное спецификацией. См. [`spec/03-objects/ontology.md`](../03-objects/ontology.md) `role.base` и [`feedback/manifesto-v2.md`](../../feedback/manifesto-v2.md) Q-25.
+Это нормирует admin-pattern: роли с административной функцией видят все записи независимо от ownership. Манифест v2 §8.2 определяет `admin` как пятый класс base-таксономии (`owner | viewer | agent | observer | admin`); спека реализует его поведенческую семантику. См. [`spec/03-objects/ontology.md`](../03-objects/ontology.md) `role.base`.
 
 ### Приоритет 2: kind === 'reference'
 
@@ -109,15 +109,11 @@ return viewerWorld
 
 **Reserved for resolution in:** v0.2+.
 
-### Q-25 (v0.1.1): admin pattern в base-таксономии
+### Q-25 (✅ resolved в манифесте v2.1, spec v0.1.2): admin pattern в base-таксономии
 
-**Манифест говорит:** §8.2 — base ∈ `{owner, viewer, agent, observer}`.
+**Резолюция:** манифест v2 §8.2 теперь определяет `admin` как пятый класс base-таксономии (`owner | viewer | agent | observer | admin`); спека v0.1.2 реализует его поведенческую семантику (priority 1 row-filter — admin видит все записи независимо от ownership). Закрыто: spec-extension больше не существует, спека снова чистая проекция манифеста.
 
-**Ambiguity (исходная):** ни одна из четырёх баз не описывает admin-роль (видит все записи, execute'ит intents без preapproval). Fixtures expected/viewer-world/ для librarian требовали полную row-видимость.
-
-**v0.1.1 нормативная позиция:** spec-extension — добавлено пятое значение `"admin"` для `role.base` с нормативной семантикой row-override (priority 1 row-filter). Прочие 4 базы остаются accepted как opaque.
-
-**Reserved for resolution in:** манифест v2.1 — official sync таксономии (либо принять `admin` как 5-ю базу, либо нормировать admin-pattern другим механизмом, например `role.adminFor: ["entity1"]`).
+**История проблемы (для архива):** spec v0.1 описывала `visibleFields` как column-filter, но fixtures для librarian требовали полную row-видимость. Ни одна из исходных 4 баз (owner/viewer/agent/observer) не описывала admin-pattern. Spec v0.1.1 закрыла ambiguity через spec-extension — добавила `"admin"` локально в спеке. Manifest PR #45 sync'нул базу обратно в манифест.
 
 ### Q-18: Self-id поле в visibleFields
 
