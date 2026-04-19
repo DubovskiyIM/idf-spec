@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "materializeAsDocument для book-detail reader. detail для b1; reader доступен только borrow_book."
+  },
+  "kind": "document",
+  "projectionId": "book-detail",
+  "archetype": "detail",
+  "viewer": "reader",
+  "title": "The Pragmatic Programmer",
+  "sections": [
+    { "kind": "header", "content": { "title": "The Pragmatic Programmer" } },
+    { "kind": "fields", "content": [
+      { "name": "id",     "value": "b1" },
+      { "name": "title",  "value": "The Pragmatic Programmer" },
+      { "name": "author", "value": "Hunt & Thomas" },
+      { "name": "isbn",   "value": "978-0201616224" }
+    ]},
+    { "kind": "actions", "content": [
+      { "intentId": "borrow_book", "label": "borrow_book", "confirmation": "standard" }
+    ]}
+  ]
+}

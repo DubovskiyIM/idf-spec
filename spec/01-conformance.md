@@ -30,9 +30,13 @@ L1 плюс:
 
 L2-conformance проверяется fixture-векторами [`fixtures/library/expected/artifact/`](fixtures/library/expected/artifact/).
 
-### L3 — Four materializations (Reserved для v0.2+)
+### L3 — Four materializations (частично нормировано в v0.2.0)
 
-L2 плюс четыре равноправных читателя artifact'а: pixel, voice, agent API, document. Все используют единый `filterWorldForRole`. v0.1 не нормирует.
+L2 плюс четыре равноправных читателя artifact'а: pixel, voice, agent API, document. Все используют единый `filterWorldForRole`.
+
+**v0.2.0:** **document** материализация нормирована (см. [`05-materializations/document.md`](05-materializations/document.md)). Прочие три остаются Reserved.
+
+L3-document conformance проверяется fixture-векторами `expected/document/` для library и events.
 
 ### L4 — Full (Reserved для v0.2+)
 

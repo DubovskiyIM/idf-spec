@@ -1,0 +1,30 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "materializeAsDocument для book-catalog librarian. footer.actions: remove_book (destructive) + update_book_metadata; toolbar.create: add_book."
+  },
+  "kind": "document",
+  "projectionId": "book-catalog",
+  "archetype": "catalog",
+  "viewer": "librarian",
+  "title": "Book catalog",
+  "sections": [
+    { "kind": "header", "content": { "title": "Book catalog" } },
+    { "kind": "table", "content": {
+      "columns": ["title", "author"],
+      "rows": [
+        ["The Pragmatic Programmer", "Hunt & Thomas"],
+        ["Domain-Driven Design", "Eric Evans"],
+        ["Designing Data-Intensive Applications", "Martin Kleppmann"]
+      ]
+    }},
+    { "kind": "actions", "content": [
+      { "intentId": "remove_book", "label": "remove_book", "confirmation": "destructive", "badge": "destructive" },
+      { "intentId": "update_book_metadata", "label": "update_book_metadata", "confirmation": "standard" }
+    ]},
+    { "kind": "actions", "content": [
+      { "intentId": "add_book", "label": "+ add_book", "confirmation": "standard" }
+    ]}
+  ]
+}

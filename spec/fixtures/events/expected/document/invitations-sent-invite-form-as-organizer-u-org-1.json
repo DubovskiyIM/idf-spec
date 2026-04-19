@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "invite-form organizer. body authored: ['userId']."
+  },
+  "kind": "document",
+  "projectionId": "invite-form",
+  "archetype": "form",
+  "viewer": "organizer",
+  "title": "invite_user",
+  "sections": [
+    { "kind": "header", "content": { "title": "invite_user" } },
+    { "kind": "fields", "content": [
+      { "name": "userId" }
+    ]},
+    { "kind": "actions", "content": [
+      { "intentId": "invite_user", "label": "submit: invite_user", "confirmation": "standard" }
+    ]}
+  ]
+}
