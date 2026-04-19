@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://idf-spec.org/v0.1/intents-collection.schema.json",
+  "title": "Collection of intents (fixture wrapper)",
+  "description": "Wrapper-схема для fixture-файлов intents.json. Не часть нормативного формата; используется AJV-runner'ом для проверки массива intent'ов.",
+  "type": "object",
+  "required": ["_meta", "intents"],
+  "additionalProperties": false,
+  "properties": {
+    "_meta":   { "type": "object" },
+    "intents": {
+      "type": "array",
+      "items": { "$ref": "intent.schema.json" }
+    }
+  }
+}

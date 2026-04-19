@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://idf-spec.org/v0.1/intent.schema.json",
+  "title": "IDF Intent (v0.1)",
+  "description": "Декларативная частица: возможность изменить мир. Не функция и не handler — структура данных.",
+  "type": "object",
+  "required": ["id", "ownerRole", "effects"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Стабильный идентификатор намерения, lower_snake_case.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "ownerRole": {
+      "description": "Имя роли из ontology.roles, авторизованной инициировать намерение.",
+      "type": "string"
+    },
+    "requiredFields": {
+      "description": "Поля, которые viewer обязан заполнить до подтверждения. Каждый элемент — {name, type}. type — opaque в v0.1 (рекомендация: использовать значения из ontology.field.type).",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" }
+        }
+      }
+    },
+    "conditions": {
+      "description": "Предикаты над миром, которые MUST выполняться перед подтверждением. v0.1 не нормирует язык предикатов — opaque объекты. Validator в v0.1 принимает массив без runtime-проверки. Reserved для v0.2+.",
+      "type": "array"
+    },
+    "effects": {
+      "description": "Список proto-эффектов, эмитируемых при подтверждении. Каждый — partial effect (kind, entity обязательны; fields опциональны и могут быть templated через placeholder-конвенции в v0.2+).",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["kind", "entity"],
+        "additionalProperties": true,
+        "properties": {
+          "kind":   { "enum": ["create", "replace", "remove", "transition", "commit"] },
+          "entity": { "type": "string" }
+        }
+      }
+    }
+  }
+}
