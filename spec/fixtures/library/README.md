@@ -14,10 +14,12 @@
 
 ## Роли
 
-| Роль | visibleFields | canExecute |
-|---|---|---|
-| `reader` | User: [id, name]; Book: \*; Loan: \* | borrow_book, return_book |
-| `librarian` | все | add_book, remove_book, register_user, update_book_metadata, cancel_loan |
+| Роль | base | visibleFields | canExecute |
+|---|---|---|---|
+| `reader` | (default) | User: [id, name]; Book: \*; Loan: \* | borrow_book, return_book |
+| `librarian` | `admin` | все | add_book, remove_book, register_user, update_book_metadata, cancel_loan |
+
+`librarian.base = "admin"` — нормирует row-override (видит все записи независимо от `ownerField`); см. [`../../04-algebra/filter-world.md`](../../04-algebra/filter-world.md) priority 1.
 
 ## Намерения (7)
 

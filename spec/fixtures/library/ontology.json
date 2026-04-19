@@ -45,6 +45,7 @@
       "canExecute": ["borrow_book", "return_book"]
     },
     "librarian": {
+      "base": "admin",
       "visibleFields": {
         "User": "*",
         "Book": "*",

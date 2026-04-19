@@ -96,9 +96,17 @@ ontology.roles.reader = {
 
 Список intent.id, которые роль авторизована инициировать. Может содержать единственный элемент `"*"` — означает «все intent'ы домена». Используется crystallize для фильтрации intent'ов в проекции (footer.actions, toolbar.create, footer.submit).
 
-### role.scope, role.base
+### role.base
 
-Reserved для v0.2+. Парсер MUST принимать поля как opaque objects/strings без интерпретации. v0.1 не использует ни в `filterWorldForRole`, ни в `crystallize`.
+В v0.1 нормировано **частично**: значение `"admin"` имеет нормативную семантику (см. [`04-algebra/filter-world.md`](../04-algebra/filter-world.md) priority 0 — admin-override row-filter). Прочие значения (`owner | viewer | agent | observer`) — accepted как opaque, без поведенческих эффектов на L1+L2.
+
+**Spec-extension:** манифест v2 §8.2 перечисляет четыре базы (`owner | viewer | agent | observer`); `"admin"` — пятое значение, добавленное спецификацией для нормировки admin-pattern (роль видит все записи без owner-проверки). Resolution в манифесте v2.1 — см. [`feedback/manifesto-v2.md`](../../feedback/manifesto-v2.md).
+
+Парсер MUST принимать любую строку в `role.base`. Спека гарантирует поведенческую семантику только для `"admin"`; прочие — Reserved L4 (вместе с preapproval guard для `agent`, observer-invariant и т.д.).
+
+### role.scope
+
+Reserved для v0.2+. Парсер MUST принимать поле как opaque object без интерпретации. v0.1 не использует в `filterWorldForRole` (3-приоритетный фильтр без scope; см. [`04-algebra/filter-world.md`](../04-algebra/filter-world.md)).
 
 ## Invariants и rules
 

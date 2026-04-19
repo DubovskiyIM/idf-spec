@@ -21,17 +21,23 @@ filterWorldForRole(world, viewer, ontology) → viewerWorld
 
 См. [`02-axioms.md`](../02-axioms.md) аксиома 2.
 
-## Row-filter (3-приоритетный, нормативно)
+## Row-filter (4-приоритетный, нормативно)
 
 Для каждой entity `E` из `ontology.entities`:
 
-### Приоритет 1: visibleFields gate
+### Приоритет 0: gate visibleFields
 
-Если `E` **не упомянута** в `viewer.role.visibleFields` — `viewerWorld[E]` отсутствует целиком (даже как пустой namespace). Это column-уровневая видимость на уровне entity.
+Если `E` **не упомянута** в `viewer.role.visibleFields` — `viewerWorld[E]` отсутствует целиком (даже как пустой namespace). Это column-уровневая видимость на уровне entity (gate перед row-filter).
+
+### Приоритет 1: role.base === "admin" — admin-override
+
+Если `viewer.role.base === "admin"` — row-filter не применяется: видны все записи `world[E]`. Применить column-filter (см. ниже).
+
+Это нормирует admin-pattern: роли с административной функцией видят все записи независимо от ownership. **Spec-extension манифеста v2 §8.2**: манифест перечисляет четыре базы (`owner | viewer | agent | observer`); `"admin"` — пятое значение, добавленное спецификацией. См. [`spec/03-objects/ontology.md`](../03-objects/ontology.md) `role.base` и [`feedback/manifesto-v2.md`](../../feedback/manifesto-v2.md) Q-25.
 
 ### Приоритет 2: kind === 'reference'
 
-Если `E.kind === "reference"` — все записи `world[E]` видны (без owner-проверки). Применить column-filter (см. ниже).
+Если `E.kind === "reference"` — все записи `world[E]` видны (без owner-проверки). Применить column-filter.
 
 ### Приоритет 3: ownerField
 
@@ -43,7 +49,7 @@ filterWorldForRole(world, viewer, ontology) → viewerWorld
 
 ### Reserved L4: role.scope
 
-Манифест §14 описывает четвёртый приоритет 0 — `role.scope` для m2m через assignment-bridge. **В v0.1 Reserved**: row-filter — 3-приоритетный (без scope). См. Open question Q-17.
+Манифест §14 описывает дополнительный приоритет 0 — `role.scope` для m2m через assignment-bridge. **В v0.1 Reserved**: row-filter — 4-приоритетный (без scope; manifest'овский priority 0 в спеке отдан admin-override). См. Open question Q-17.
 
 ## Column-filter
 
@@ -62,14 +68,18 @@ filterWorldForRole(world, viewer, ontology) → viewerWorld
 
 ```
 viewerWorld = {}
+isAdmin = viewer.role.base == "admin"     // priority 1 pre-check
 for each entityName in ontology.entities:
   if entityName not in viewer.role.visibleFields:
-    continue                              // priority 1
+    continue                              // priority 0: gate
   E = ontology.entities[entityName]
   fieldsAllowed = viewer.role.visibleFields[entityName]   // "*" или array
   candidates = world[entityName]
   filtered = {}
-  if E.kind == "reference":               // priority 2
+  if isAdmin:                             // priority 1: admin-override
+    for each (id, record) in candidates:
+      filtered[id] = projectFields(record, fieldsAllowed)
+  else if E.kind == "reference":          // priority 2
     for each (id, record) in candidates:
       filtered[id] = projectFields(record, fieldsAllowed)
   else if E.ownerField defined:           // priority 3
@@ -95,9 +105,19 @@ return viewerWorld
 
 **Манифест говорит:** §14 — приоритет 0: «`role.scope` — m2m через bridge-сущность».
 
-**v0.1 нормативная позиция:** Reserved L4. Row-filter — 3-приоритетный (без scope). Парсер MUST принимать `role.scope` как opaque object; `filterWorldForRole` MUST игнорировать.
+**v0.1 нормативная позиция:** Reserved L4. Row-filter — 4-приоритетный (без scope; priority 0 в спеке отдан admin-override). Парсер MUST принимать `role.scope` как opaque object; `filterWorldForRole` MUST игнорировать.
 
-**Reserved for resolution in:** v0.2+ (вместе с base-таксономией ролей).
+**Reserved for resolution in:** v0.2+.
+
+### Q-25 (v0.1.1): admin pattern в base-таксономии
+
+**Манифест говорит:** §8.2 — base ∈ `{owner, viewer, agent, observer}`.
+
+**Ambiguity (исходная):** ни одна из четырёх баз не описывает admin-роль (видит все записи, execute'ит intents без preapproval). Fixtures expected/viewer-world/ для librarian требовали полную row-видимость.
+
+**v0.1.1 нормативная позиция:** spec-extension — добавлено пятое значение `"admin"` для `role.base` с нормативной семантикой row-override (priority 1 row-filter). Прочие 4 базы остаются accepted как opaque.
+
+**Reserved for resolution in:** манифест v2.1 — official sync таксономии (либо принять `admin` как 5-ю базу, либо нормировать admin-pattern другим механизмом, например `role.adminFor: ["entity1"]`).
 
 ### Q-18: Self-id поле в visibleFields
 
