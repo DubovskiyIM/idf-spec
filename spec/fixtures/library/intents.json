@@ -1,0 +1,58 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "7 intent'ов library-домена. Все эффекты — minimal (kind + entity); fields заполняются при confirm из form data + viewer context."
+  },
+  "intents": [
+    {
+      "id": "add_book",
+      "ownerRole": "librarian",
+      "requiredFields": [
+        { "name": "title",  "type": "string" },
+        { "name": "author", "type": "string" }
+      ],
+      "effects": [{ "kind": "create", "entity": "Book" }]
+    },
+    {
+      "id": "remove_book",
+      "ownerRole": "librarian",
+      "requiredFields": [{ "name": "id", "type": "string" }],
+      "effects": [{ "kind": "remove", "entity": "Book" }]
+    },
+    {
+      "id": "update_book_metadata",
+      "ownerRole": "librarian",
+      "requiredFields": [
+        { "name": "id",     "type": "string" },
+        { "name": "title",  "type": "string" },
+        { "name": "author", "type": "string" }
+      ],
+      "effects": [{ "kind": "replace", "entity": "Book" }]
+    },
+    {
+      "id": "register_user",
+      "ownerRole": "librarian",
+      "requiredFields": [{ "name": "name", "type": "string" }],
+      "effects": [{ "kind": "create", "entity": "User" }]
+    },
+    {
+      "id": "borrow_book",
+      "ownerRole": "reader",
+      "requiredFields": [{ "name": "bookId", "type": "string" }],
+      "effects": [{ "kind": "create", "entity": "Loan" }]
+    },
+    {
+      "id": "return_book",
+      "ownerRole": "reader",
+      "requiredFields": [{ "name": "id", "type": "string" }],
+      "effects": [{ "kind": "transition", "entity": "Loan" }]
+    },
+    {
+      "id": "cancel_loan",
+      "ownerRole": "librarian",
+      "requiredFields": [{ "name": "id", "type": "string" }],
+      "effects": [{ "kind": "remove", "entity": "Loan" }]
+    }
+  ]
+}
