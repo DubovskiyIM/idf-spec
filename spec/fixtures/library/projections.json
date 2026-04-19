@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "5 проекций library-домена, покрывают 4 архетипа из 7 (catalog, detail, form, dashboard)."
+  },
+  "projections": [
+    {
+      "id": "book-catalog",
+      "archetype": "catalog",
+      "entity": "Book",
+      "intents": ["add_book", "remove_book", "update_book_metadata"]
+    },
+    {
+      "id": "book-detail",
+      "archetype": "detail",
+      "entity": "Book",
+      "intents": ["update_book_metadata", "remove_book", "borrow_book"]
+    },
+    {
+      "id": "borrow-form",
+      "archetype": "form",
+      "entity": "Loan",
+      "intents": ["borrow_book"],
+      "slots": {
+        "body": {
+          "_authored": true,
+          "fields": ["bookId"]
+        }
+      }
+    },
+    {
+      "id": "my-loans",
+      "archetype": "catalog",
+      "entity": "Loan",
+      "intents": ["return_book"]
+    },
+    {
+      "id": "librarian-dashboard",
+      "archetype": "dashboard",
+      "intents": ["add_book", "register_user", "cancel_loan"]
+    }
+  ]
+}
