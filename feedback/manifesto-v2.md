@@ -1,6 +1,6 @@
 # Backlog ambiguities манифеста v2 (выявлены при написании spec-v0.1)
 
-Этот файл — **не часть спеки**. Это feedback автору манифеста: места, где манифест v2 (`source/manifesto-v2.snapshot.md`, SHA-256 `b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df`) не даёт однозначного ответа на нормативный вопрос. Спека v0.1 в каждом случае заняла conservative-минимальную позицию (см. Open questions внутри `spec/`-файлов); этот файл — единый список для рассмотрения при работе над манифестом v2.1.
+Этот файл — **не часть спеки**. Это feedback автору манифеста: места, где манифест v2 (`source/manifesto-v2.snapshot.md`, SHA-256 `6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb`) не даёт однозначного ответа на нормативный вопрос. Спека v0.1 в каждом случае заняла conservative-минимальную позицию (см. Open questions внутри `spec/`-файлов); этот файл — единый список для рассмотрения при работе над манифестом v2.1.
 
 ## Категории
 
@@ -20,7 +20,7 @@
 
 Места, требующие явного нормативного правила, отсутствующего в манифесте.
 
-- **Q-25 (v0.1.1, разрешено через spec-extension): admin pattern в base-таксономии.** Манифест §8.2 перечисляет четыре базы (`owner | viewer | agent | observer`); ни одна не описывает admin-роль (видит все записи независимо от ownership, execute'ит intents без preapproval). При попытке независимой имплементации library fixtures (см. idf-go/feedback/spec-v0.1.md A-1) обнаружено: librarian не вписывается в существующую таксономию. Спека v0.1.1 добавила пятое значение `"admin"` для `role.base` с нормативной семантикой row-override (priority 1 в filterWorldForRole). Manifest v2.1 SHOULD либо принять `admin` как пятую базу, либо нормировать admin-pattern другим механизмом (например `role.adminFor: ["entity1"]` per-entity флаг). Сейчас spec формально расширяет manifest enum.
+- **Q-25 (✅ resolved):** admin pattern в base-таксономии. Манифест §8.2 теперь включает `admin` как пятый класс (sync через [DubovskiyIM/idf#45](https://github.com/DubovskiyIM/idf/pull/45) merged). Спека v0.1.2 — реализует поведенческую семантику. Spec-extension закрыт.
 
 - **Q-23:** Сигнатура `crystallize` в манифесте §12 — `crystallize(intents, ontology, projection, patternBank, features) → artifact`. Не упомянут viewer/viewerWorld. Спека v0.1 расширила сигнатуру до `(intents, ontology, projection, viewer, viewerWorld) → artifact`, потому что viewer-scoping artifact'а требует обоих параметров. Манифест должен либо явно зафиксировать расширение, либо описать механизм передачи viewer'а через context.
 

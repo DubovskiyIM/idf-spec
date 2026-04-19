@@ -1,7 +1,7 @@
 {
   "_meta": {
     "specVersion": "0.1",
-    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
     "description": "crystallize(librarian-dashboard, viewer=librarian). Dashboard archetype: body.sections пуст в v0.1 (composition Reserved L4); toolbar.actions содержит все intent'ы проекции, доступные librarian'у, упорядочены по intent.id ASC."
   },
   "projectionId": "librarian-dashboard",
