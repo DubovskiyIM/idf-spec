@@ -1,0 +1,79 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "9 intent'ов events-домена. 6 базовых (CRUD + RSVP) + 3 wizard chain (start → details → confirm с commit α)."
+  },
+  "intents": [
+    {
+      "id": "create_event",
+      "ownerRole": "organizer",
+      "requiredFields": [
+        { "name": "title",  "type": "string" }
+      ],
+      "effects": [{ "kind": "create", "entity": "Event" }]
+    },
+    {
+      "id": "edit_event",
+      "ownerRole": "organizer",
+      "requiredFields": [
+        { "name": "id",    "type": "string" },
+        { "name": "title", "type": "string" }
+      ],
+      "effects": [{ "kind": "replace", "entity": "Event" }]
+    },
+    {
+      "id": "cancel_event",
+      "ownerRole": "organizer",
+      "requiredFields": [{ "name": "id", "type": "string" }],
+      "effects": [{ "kind": "transition", "entity": "Event" }]
+    },
+    {
+      "id": "invite_user",
+      "ownerRole": "organizer",
+      "requiredFields": [
+        { "name": "eventId", "type": "string" },
+        { "name": "userId",  "type": "string" }
+      ],
+      "effects": [{ "kind": "create", "entity": "Attendee" }]
+    },
+    {
+      "id": "accept_invite",
+      "ownerRole": "attendee",
+      "requiredFields": [{ "name": "id", "type": "string" }],
+      "effects": [{ "kind": "transition", "entity": "Attendee" }]
+    },
+    {
+      "id": "decline_invite",
+      "ownerRole": "attendee",
+      "requiredFields": [{ "name": "id", "type": "string" }],
+      "effects": [{ "kind": "transition", "entity": "Attendee" }]
+    },
+    {
+      "id": "start_event_planning",
+      "ownerRole": "organizer",
+      "requiredFields": [{ "name": "title", "type": "string" }],
+      "effects": [{ "kind": "create", "entity": "Event" }]
+    },
+    {
+      "id": "add_event_details",
+      "ownerRole": "organizer",
+      "requiredFields": [
+        { "name": "id",       "type": "string" },
+        { "name": "venueId",  "type": "string" },
+        { "name": "startsAt", "type": "datetime" },
+        { "name": "endsAt",   "type": "datetime" }
+      ],
+      "effects": [{ "kind": "replace", "entity": "Event" }]
+    },
+    {
+      "id": "confirm_event_schedule",
+      "ownerRole": "organizer",
+      "requiredFields": [{ "name": "id", "type": "string" }],
+      "effects": [
+        { "kind": "transition", "entity": "Event" },
+        { "kind": "commit",     "entity": "Event" }
+      ]
+    }
+  ]
+}
