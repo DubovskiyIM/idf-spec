@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "event-planning-wizard organizer. 3 steps; confirm имеет isCommit=true → badge=commit."
+  },
+  "kind": "document",
+  "projectionId": "event-planning-wizard",
+  "archetype": "wizard",
+  "viewer": "organizer",
+  "title": "event-planning-wizard",
+  "sections": [
+    { "kind": "header", "content": { "title": "event-planning-wizard" } },
+    { "kind": "steps", "content": [
+      { "intentId": "start_event_planning",   "label": "start_event_planning",   "isCommit": false },
+      { "intentId": "add_event_details",      "label": "add_event_details",      "isCommit": false },
+      { "intentId": "confirm_event_schedule", "label": "confirm_event_schedule", "isCommit": true, "badge": "commit" }
+    ]}
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "materializeAsDocument для book-catalog reader. Reader не имеет actions (canExecute не пересекается с проекцией) → нет actions section."
+  },
+  "kind": "document",
+  "projectionId": "book-catalog",
+  "archetype": "catalog",
+  "viewer": "reader",
+  "title": "Book catalog",
+  "sections": [
+    { "kind": "header", "content": { "title": "Book catalog" } },
+    { "kind": "table", "content": {
+      "columns": ["title", "author"],
+      "rows": [
+        ["The Pragmatic Programmer", "Hunt & Thomas"],
+        ["Domain-Driven Design", "Eric Evans"],
+        ["Designing Data-Intensive Applications", "Martin Kleppmann"]
+      ]
+    }}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "events-feed admin: feed table из 1 Event. primary=title, secondary=organizerId (organizerId — FK, но при отсутствии других не-FK полей, fallback). Wait — startsAt является не-FK, datetime field. primary должен быть title (первое не-id не-FK), secondary должен быть startsAt (второй не-FK). Hmm, но startsAt идёт после organizerId/venueId которые FK. Уточняю: primary=title, secondary=startsAt. При сборке table columns = [primary, secondary]."
+  },
+  "kind": "document",
+  "projectionId": "events-feed",
+  "archetype": "feed",
+  "viewer": "admin",
+  "title": "Event feed",
+  "sections": [
+    { "kind": "header", "content": { "title": "Event feed" } },
+    { "kind": "table", "content": {
+      "columns": ["title", "startsAt"],
+      "rows": [
+        ["Quarterly Planning", "2026-05-01T14:00:00.000Z"]
+      ]
+    }}
+  ]
+}
