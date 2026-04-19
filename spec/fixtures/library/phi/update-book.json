@@ -1,0 +1,33 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "Bootstrap + librarian заменяет автора b3. После fold: b3.author изменён, остальные поля прежние."
+  },
+  "effects": [
+    {
+      "kind": "create",
+      "entity": "Book",
+      "fields": { "id": "b1", "title": "The Pragmatic Programmer", "author": "Hunt & Thomas", "isbn": "978-0201616224" },
+      "context": { "at": "2026-04-01T09:00:00.000Z", "initiator": "u-lib-1", "intentId": "add_book" }
+    },
+    {
+      "kind": "create",
+      "entity": "Book",
+      "fields": { "id": "b2", "title": "Domain-Driven Design", "author": "Eric Evans", "isbn": "978-0321125217" },
+      "context": { "at": "2026-04-01T09:01:00.000Z", "initiator": "u-lib-1", "intentId": "add_book" }
+    },
+    {
+      "kind": "create",
+      "entity": "Book",
+      "fields": { "id": "b3", "title": "Designing Data-Intensive Applications", "author": "Martin Kleppmann" },
+      "context": { "at": "2026-04-01T09:02:00.000Z", "initiator": "u-lib-1", "intentId": "add_book" }
+    },
+    {
+      "kind": "replace",
+      "entity": "Book",
+      "fields": { "id": "b3", "author": "Martin Kleppmann (updated)" },
+      "context": { "at": "2026-04-05T16:00:00.000Z", "initiator": "u-lib-1", "intentId": "update_book_metadata" }
+    }
+  ]
+}
