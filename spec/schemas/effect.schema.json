@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://idf-spec.org/v0.1/effect.schema.json",
+  "title": "IDF Effect (v0.1)",
+  "description": "Атом изменения мира в формате IDF. Каждый эффект — запись с фиксированной структурой {kind, entity, fields, context}, упорядоченная по времени confirm в Φ.",
+  "type": "object",
+  "required": ["kind", "entity"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "description": "Вид изменения (α в манифесте §7). Пять допустимых значений; commit зарезервирован для wizard-архетипа и не покрыт fixture-вектором в v0.1.",
+      "enum": ["create", "replace", "remove", "transition", "commit"]
+    },
+    "entity": {
+      "description": "Имя сущности из ontology.entities, к которой относится эффект.",
+      "type": "string",
+      "minLength": 1
+    },
+    "fields": {
+      "description": "Полезная нагрузка эффекта. Структура определяется ontology.entities[entity].fields. Может отсутствовать для α=remove (имеется только id целевой сущности — конвенция: fields={id:...}).",
+      "type": "object"
+    },
+    "context": {
+      "description": "Метаданные эффекта: время, инициатор, ссылки. v0.1 нормирует только обязательное поле at (ISO 8601 timestamp); остальные поля — opaque.",
+      "type": "object",
+      "required": ["at"],
+      "properties": {
+        "at": {
+          "description": "Время confirm эффекта в формате ISO 8601 с миллисекундами и часовым поясом, например `2026-04-19T10:00:00.000Z`. Используется для упорядочивания Φ при fold.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "initiator": {
+          "description": "ID viewer'а, инициировавшего намерение. Может отсутствовать для system-эффектов.",
+          "type": "string"
+        },
+        "intentId": {
+          "description": "ID намерения из ontology, породившего эффект. Опционально в v0.1.",
+          "type": "string"
+        },
+        "__irr": {
+          "description": "Маркер необратимости (§7 манифеста). Reserved для v0.2+: integrity-правило не нормируется в v0.1.",
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
