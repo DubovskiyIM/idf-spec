@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "Admin создаёт 2 Venue. Базовый snapshot для последующих сценариев."
+  },
+  "effects": [
+    {
+      "kind": "create",
+      "entity": "Venue",
+      "fields": { "id": "v1", "name": "Conference Room A", "capacity": 30 },
+      "context": { "at": "2026-04-01T08:00:00.000Z", "initiator": "u-admin-1" }
+    },
+    {
+      "kind": "create",
+      "entity": "Venue",
+      "fields": { "id": "v2", "name": "Auditorium", "capacity": 200 },
+      "context": { "at": "2026-04-01T08:01:00.000Z", "initiator": "u-admin-1" }
+    }
+  ]
+}

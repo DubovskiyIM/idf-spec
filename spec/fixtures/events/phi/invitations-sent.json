@@ -1,0 +1,65 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "organizer-creates-event + organizer регистрирует двух attendee (u-att-1 Alice, u-att-2 Bob) + приглашает их на e1 (создаёт Attendee a1, a2 в статусе invited)."
+  },
+  "effects": [
+    {
+      "kind": "create",
+      "entity": "Venue",
+      "fields": { "id": "v1", "name": "Conference Room A", "capacity": 30 },
+      "context": { "at": "2026-04-01T08:00:00.000Z", "initiator": "u-admin-1" }
+    },
+    {
+      "kind": "create",
+      "entity": "Venue",
+      "fields": { "id": "v2", "name": "Auditorium", "capacity": 200 },
+      "context": { "at": "2026-04-01T08:01:00.000Z", "initiator": "u-admin-1" }
+    },
+    {
+      "kind": "create",
+      "entity": "User",
+      "fields": { "id": "u-org-1", "name": "Olivia Organizer" },
+      "context": { "at": "2026-04-01T09:00:00.000Z", "initiator": "u-admin-1" }
+    },
+    {
+      "kind": "create",
+      "entity": "Event",
+      "fields": {
+        "id": "e1",
+        "title": "Quarterly Planning",
+        "organizerId": "u-org-1",
+        "venueId": "v1",
+        "startsAt": "2026-05-01T14:00:00.000Z",
+        "endsAt": "2026-05-01T16:00:00.000Z",
+        "status": "draft"
+      },
+      "context": { "at": "2026-04-02T10:00:00.000Z", "initiator": "u-org-1", "intentId": "create_event" }
+    },
+    {
+      "kind": "create",
+      "entity": "User",
+      "fields": { "id": "u-att-1", "name": "Alice Attendee" },
+      "context": { "at": "2026-04-03T09:00:00.000Z", "initiator": "u-admin-1" }
+    },
+    {
+      "kind": "create",
+      "entity": "User",
+      "fields": { "id": "u-att-2", "name": "Bob Attendee" },
+      "context": { "at": "2026-04-03T09:01:00.000Z", "initiator": "u-admin-1" }
+    },
+    {
+      "kind": "create",
+      "entity": "Attendee",
+      "fields": { "id": "a1", "eventId": "e1", "userId": "u-att-1", "status": "invited" },
+      "context": { "at": "2026-04-03T10:00:00.000Z", "initiator": "u-org-1", "intentId": "invite_user" }
+    },
+    {
+      "kind": "create",
+      "entity": "Attendee",
+      "fields": { "id": "a2", "eventId": "e1", "userId": "u-att-2", "status": "invited" },
+      "context": { "at": "2026-04-03T10:01:00.000Z", "initiator": "u-org-1", "intentId": "invite_user" }
+    }
+  ]
+}
