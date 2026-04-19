@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://idf-spec.org/v0.1/ontology.schema.json",
+  "title": "IDF Ontology (v0.1)",
+  "description": "Тип данных домена: сущности, поля, роли. v0.1 не нормирует invariants, rules, base-таксономию ролей, role.scope — Reserved L4.",
+  "type": "object",
+  "required": ["entities", "roles"],
+  "additionalProperties": false,
+  "properties": {
+    "_meta": {
+      "description": "Метаданные fixture-файла (не часть формата). Принимаются парсером без эффекта.",
+      "type": "object"
+    },
+    "entities": {
+      "description": "Объект, ключи — имена типов сущностей (PascalCase), значения — описания типов.",
+      "type": "object",
+      "patternProperties": {
+        "^[A-Z][A-Za-z0-9_]*$": { "$ref": "#/definitions/entity" }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "roles": {
+      "description": "Объект, ключи — имена ролей (lower_snake_case), значения — описания ролей.",
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-z0-9_]*$": { "$ref": "#/definitions/role" }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "invariants": {
+      "description": "Reserved для v0.2+ (5 видов: role-capability, referential, transition, cardinality, aggregate). v0.1 принимает поле как opaque массив; не валидирует элементы.",
+      "type": "array"
+    },
+    "rules": {
+      "description": "Reserved для v0.2+ (Reactive Rules Engine с 4 расширениями). v0.1 принимает поле как opaque массив.",
+      "type": "array"
+    }
+  },
+  "definitions": {
+    "entity": {
+      "type": "object",
+      "required": ["fields"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "description": "Таксономический маркер. v0.1 нормирует два значения: 'internal' (default, owned через ownerField) и 'reference' (без owner, виден всем с правильным visibleFields). Значения 'mirror' и 'assignment' зарезервированы; в v0.1 трактуются как 'internal'.",
+          "enum": ["internal", "reference", "mirror", "assignment"],
+          "default": "internal"
+        },
+        "ownerField": {
+          "description": "Имя поля сущности, указывающего на single-owner (foreign key к role-сущности). Для kind='reference' — игнорируется. Опционально (без него — privacy by default).",
+          "type": "string"
+        },
+        "fields": {
+          "description": "Описание полей сущности. Ключи — camelCase.",
+          "type": "object",
+          "patternProperties": {
+            "^[a-z][a-zA-Z0-9_]*$": { "$ref": "#/definitions/field" }
+          },
+          "additionalProperties": false,
+          "minProperties": 1
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "Базовый тип. v0.1 нормирует пять: string, number, boolean, datetime (ISO 8601), enum.",
+          "enum": ["string", "number", "boolean", "datetime", "enum"]
+        },
+        "values": {
+          "description": "Допустимые значения для type='enum'. Массив строк.",
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "fieldRole": {
+          "description": "Семантическая роль поля (advisory hint для читателей). v0.1 принимает как opaque строку; нормативного списка значений нет.",
+          "type": "string"
+        },
+        "references": {
+          "description": "Имя сущности, на которую ссылается поле (foreign key). Опционально. Validation требований — Reserved L4 (referential invariant).",
+          "type": "string"
+        },
+        "required": {
+          "description": "Обязательно ли поле при создании сущности. Default false.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "role": {
+      "type": "object",
+      "required": ["visibleFields", "canExecute"],
+      "additionalProperties": false,
+      "properties": {
+        "visibleFields": {
+          "description": "Какие поля каких сущностей видны роли. Объект {EntityName: ['field1', ...] | '*'}. '*' — все поля. Сущность, не упомянутая в visibleFields, — невидима для роли.",
+          "type": "object",
+          "patternProperties": {
+            "^[A-Z][A-Za-z0-9_]*$": {
+              "oneOf": [
+                { "type": "string", "enum": ["*"] },
+                { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "canExecute": {
+          "description": "Список intent.id, которые роль может инициировать. Может содержать строку '*' как единственный элемент массива — означает 'все intent'ы домена'.",
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "scope": {
+          "description": "Reserved для v0.2+ (m2m через assignment-bridge). v0.1 принимает поле как opaque object; не использует в filterWorldForRole (3-приоритетный фильтр без scope).",
+          "type": "object"
+        },
+        "base": {
+          "description": "Reserved для v0.2+ (base-таксономия: owner | viewer | agent | observer).",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
