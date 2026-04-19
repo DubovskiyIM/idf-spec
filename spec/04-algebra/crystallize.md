@@ -109,14 +109,16 @@ slots.toolbar.actions       ← массив {intentId, label, confirmation} д�
                               доступных viewer'у, упорядочен по intent.id ASC
 ```
 
-#### feed (нормативно с v0.1.5)
+#### feed (нормативно с v0.1.5; itemDisplay добавлен v0.2.0)
 
 ```
-slots.body.entries  ← Object.values(viewerWorld[projection.entity]) упорядоченный
-                       по первому datetime-полю в Entity.FieldsOrder DESC
-                       (если такого поля нет — по id ASC); column-filter как catalog
-slots.footer        ← опускается если intents=[] (read-only feed)
-slots.toolbar       ← опускается если intents=[]
+slots.body.entries      ← Object.values(viewerWorld[projection.entity]) упорядоченный
+                           по первому datetime-полю в Entity.FieldsOrder DESC
+                           (если такого поля нет — по id ASC); column-filter как catalog
+slots.body.itemDisplay  ← {primary: <первое не-id не-FK поле>, secondary: <второе>}
+                           same heuristic как у catalog (если projection.entity задан)
+slots.footer            ← опускается если intents=[] (read-only feed)
+slots.toolbar           ← опускается если intents=[]
 ```
 
 Если `intents.length > 0` — `footer.actions` и `toolbar.create` заполняются как у catalog (см. выше).

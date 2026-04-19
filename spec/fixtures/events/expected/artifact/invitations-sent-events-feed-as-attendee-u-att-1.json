@@ -1,15 +1,16 @@
 {
   "_meta": {
-    "specVersion": "0.1",
+    "specVersion": "0.2.0",
     "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
-    "description": "crystallize(events-feed, viewer=attendee Alice). Attendee не видит чужие Event'ы (Event.ownerField=organizerId; Alice ≠ u-org-1) → пустой feed. Это документированное B-1 design behavior спеки v0.1: спека не нормирует cascade visibility через Attendee.eventId. Если future v0.2 нормирует — fixture обновится."
+    "description": "crystallize(events-feed, attendee Alice). attendee не видит чужие Event (B-1) → пустой entries. itemDisplay derive'нут из ontology независимо от viewer."
   },
   "projectionId": "events-feed",
   "archetype": "feed",
   "viewer": "attendee",
   "slots": {
     "body": {
-      "entries": []
+      "entries": [],
+      "itemDisplay": { "primary": "title", "secondary": "startsAt" }
     }
   }
 }
