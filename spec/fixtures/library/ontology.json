@@ -1,0 +1,56 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "Эталонный синтетический домен library: User, Book (reference), Loan (owned). Две роли: reader и librarian."
+  },
+  "entities": {
+    "User": {
+      "kind": "internal",
+      "ownerField": "id",
+      "fields": {
+        "id":   { "type": "string", "required": true },
+        "name": { "type": "string", "required": true }
+      }
+    },
+    "Book": {
+      "kind": "reference",
+      "fields": {
+        "id":     { "type": "string", "required": true },
+        "title":  { "type": "string", "required": true },
+        "author": { "type": "string", "required": true },
+        "isbn":   { "type": "string" }
+      }
+    },
+    "Loan": {
+      "kind": "internal",
+      "ownerField": "userId",
+      "fields": {
+        "id":         { "type": "string",   "required": true },
+        "userId":     { "type": "string",   "required": true, "references": "User" },
+        "bookId":     { "type": "string",   "required": true, "references": "Book" },
+        "status":     { "type": "enum",     "values": ["active", "returned"], "required": true },
+        "borrowedAt": { "type": "datetime", "required": true },
+        "returnedAt": { "type": "datetime" }
+      }
+    }
+  },
+  "roles": {
+    "reader": {
+      "visibleFields": {
+        "User": ["id", "name"],
+        "Book": "*",
+        "Loan": "*"
+      },
+      "canExecute": ["borrow_book", "return_book"]
+    },
+    "librarian": {
+      "visibleFields": {
+        "User": "*",
+        "Book": "*",
+        "Loan": "*"
+      },
+      "canExecute": ["add_book", "remove_book", "register_user", "update_book_metadata", "cancel_loan"]
+    }
+  }
+}
