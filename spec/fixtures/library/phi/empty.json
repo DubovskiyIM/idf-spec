@@ -1,0 +1,8 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "description": "Пустой Φ. fold(empty, ontology) должен вернуть пустые namespace'ы для каждой entity (по структуре library: User, Book, Loan)."
+  },
+  "effects": []
+}

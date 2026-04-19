@@ -22,9 +22,17 @@ schemas=("$SCHEMAS_DIR"/*.schema.json)
 if [ ${#schemas[@]} -eq 0 ]; then
   echo "  (нет .schema.json в $SCHEMAS_DIR)"
 else
+  # Каждая схема компилируется со всеми остальными как референсами,
+  # чтобы wrapper-схемы (phi, intents-collection, projections-collection),
+  # ссылающиеся на core-схемы через $ref, разрешали ссылки.
   for schema in "${schemas[@]}"; do
     echo "  $schema"
-    npx ajv compile -s "$schema" --strict=false > /dev/null
+    refs=()
+    for other in "${schemas[@]}"; do
+      [ "$other" = "$schema" ] && continue
+      refs+=("-r" "$other")
+    done
+    npx ajv compile -s "$schema" "${refs[@]}" -c ajv-formats --strict=false > /dev/null
   done
 fi
 
@@ -41,6 +49,7 @@ if [ -d "$FIXTURES_DIR" ]; then
     if [ -f "$domain_dir/ontology.json" ] && [ -f "$SCHEMAS_DIR/ontology.schema.json" ]; then
       npx ajv validate \
         -s "$SCHEMAS_DIR/ontology.schema.json" \
+        -c ajv-formats \
         -d "$domain_dir/ontology.json" \
         --strict=false
     fi
@@ -49,6 +58,7 @@ if [ -d "$FIXTURES_DIR" ]; then
       npx ajv validate \
         -s "$SCHEMAS_DIR/intents-collection.schema.json" \
         -r "$SCHEMAS_DIR/intent.schema.json" \
+        -c ajv-formats \
         -d "$domain_dir/intents.json" \
         --strict=false
     fi
@@ -57,6 +67,7 @@ if [ -d "$FIXTURES_DIR" ]; then
       npx ajv validate \
         -s "$SCHEMAS_DIR/projections-collection.schema.json" \
         -r "$SCHEMAS_DIR/projection.schema.json" \
+        -c ajv-formats \
         -d "$domain_dir/projections.json" \
         --strict=false
     fi
@@ -69,6 +80,7 @@ if [ -d "$FIXTURES_DIR" ]; then
           npx ajv validate \
             -s "$SCHEMAS_DIR/phi.schema.json" \
             -r "$SCHEMAS_DIR/effect.schema.json" \
+            -c ajv-formats \
             -d "$phi" \
             --strict=false
         done
@@ -82,6 +94,7 @@ if [ -d "$FIXTURES_DIR" ]; then
           echo "    artifact: $art"
           npx ajv validate \
             -s "$SCHEMAS_DIR/artifact.schema.json" \
+            -c ajv-formats \
             -d "$art" \
             --strict=false
         done
