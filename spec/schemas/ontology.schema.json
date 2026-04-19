@@ -124,7 +124,7 @@
           "type": "object"
         },
         "base": {
-          "description": "Reserved для v0.2+ (base-таксономия: owner | viewer | agent | observer).",
+          "description": "Base-таксономия роли. Манифест §8.2 нормирует четыре значения (owner | viewer | agent | observer); spec-extension v0.1.1 добавляет 'admin' с нормативной семантикой row-override (см. spec/04-algebra/filter-world.md priority 1). Прочие значения принимаются opaque без поведенческого эффекта в L1+L2.",
           "type": "string"
         }
       }

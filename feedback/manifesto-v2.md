@@ -20,6 +20,8 @@
 
 Места, требующие явного нормативного правила, отсутствующего в манифесте.
 
+- **Q-25 (v0.1.1, разрешено через spec-extension): admin pattern в base-таксономии.** Манифест §8.2 перечисляет четыре базы (`owner | viewer | agent | observer`); ни одна не описывает admin-роль (видит все записи независимо от ownership, execute'ит intents без preapproval). При попытке независимой имплементации library fixtures (см. idf-go/feedback/spec-v0.1.md A-1) обнаружено: librarian не вписывается в существующую таксономию. Спека v0.1.1 добавила пятое значение `"admin"` для `role.base` с нормативной семантикой row-override (priority 1 в filterWorldForRole). Manifest v2.1 SHOULD либо принять `admin` как пятую базу, либо нормировать admin-pattern другим механизмом (например `role.adminFor: ["entity1"]` per-entity флаг). Сейчас spec формально расширяет manifest enum.
+
 - **Q-23:** Сигнатура `crystallize` в манифесте §12 — `crystallize(intents, ontology, projection, patternBank, features) → artifact`. Не упомянут viewer/viewerWorld. Спека v0.1 расширила сигнатуру до `(intents, ontology, projection, viewer, viewerWorld) → artifact`, потому что viewer-scoping artifact'а требует обоих параметров. Манифест должен либо явно зафиксировать расширение, либо описать механизм передачи viewer'а через context.
 
 - **Q-7:** Templating language для `intent.effects[].fields` плейсхолдеров. Манифест §6 описывает proto-effects, но не нормирует формат плейсхолдеров. Спека v0.1: opaque, implementer выбирает конвенцию. Это блокирует реальную интероперабельность; v2.1 SHOULD выбрать конвенцию (например, `$viewer.id`, `{name}`).
