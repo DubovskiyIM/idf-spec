@@ -1,0 +1,22 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "crystallize(invite-form, viewer=organizer). Form архетип; intents.length===1 → header.title=intent.id. mergeProjections заменил body на authored ['userId']."
+  },
+  "projectionId": "invite-form",
+  "archetype": "form",
+  "viewer": "organizer",
+  "slots": {
+    "header": {
+      "title": "invite_user"
+    },
+    "body": {
+      "_authored": true,
+      "fields": ["userId"]
+    },
+    "footer": {
+      "submit": { "intentId": "invite_user", "label": "invite_user", "confirmation": "standard" }
+    }
+  }
+}
