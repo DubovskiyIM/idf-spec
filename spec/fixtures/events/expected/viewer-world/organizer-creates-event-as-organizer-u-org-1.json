@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "organizer-creates-event + organizer u-org-1: видит свой User (ownerField=id), Venue (ref), свой Event e1 (ownerField=organizerId)."
+  },
+  "viewerWorld": {
+    "User": {
+      "u-org-1": { "id": "u-org-1", "name": "Olivia Organizer" }
+    },
+    "Venue": {
+      "v1": { "id": "v1", "name": "Conference Room A", "capacity": 30 },
+      "v2": { "id": "v2", "name": "Auditorium", "capacity": 200 }
+    },
+    "Event": {
+      "e1": { "id": "e1", "title": "Quarterly Planning", "organizerId": "u-org-1", "venueId": "v1", "startsAt": "2026-05-01T14:00:00.000Z", "endsAt": "2026-05-01T16:00:00.000Z", "status": "draft" }
+    },
+    "Attendee": {}
+  }
+}
