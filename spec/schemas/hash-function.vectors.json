@@ -1,0 +1,100 @@
+{
+  "vectors": [
+    {
+      "kind": "cyrb53-string",
+      "input": "",
+      "expected": "0bdcb81aee8d83"
+    },
+    {
+      "kind": "cyrb53-string",
+      "input": "a",
+      "expected": "1c2ba782c97901"
+    },
+    {
+      "kind": "cyrb53-string",
+      "input": "abc",
+      "expected": "11f9f91ac18c8d"
+    },
+    {
+      "kind": "cyrb53-string",
+      "input": "Hello, World!",
+      "expected": "1c5356aca6ab8a"
+    },
+    {
+      "kind": "cyrb53-string",
+      "input": "{}",
+      "expected": "1bc27f5a56d1e7"
+    },
+    {
+      "kind": "cyrb53-string",
+      "input": "{\"entities\":{}}",
+      "expected": "10a3943cc084f2"
+    },
+    {
+      "kind": "hashOntology",
+      "input": null,
+      "expected": "00000000000000"
+    },
+    {
+      "kind": "hashOntology",
+      "input": {},
+      "expected": "1bc27f5a56d1e7"
+    },
+    {
+      "kind": "hashOntology",
+      "input": {
+        "entities": {}
+      },
+      "expected": "10a3943cc084f2"
+    },
+    {
+      "kind": "hashOntology",
+      "input": {
+        "entities": {
+          "Task": {
+            "fields": {}
+          }
+        }
+      },
+      "expected": "159c4399c937de"
+    },
+    {
+      "kind": "hashOntology",
+      "input": {
+        "a": 1,
+        "b": 2,
+        "c": 3
+      },
+      "expected": "167bc0dd9eccc2"
+    },
+    {
+      "kind": "hashOntology",
+      "input": {
+        "c": 3,
+        "a": 1,
+        "b": 2
+      },
+      "expected": "167bc0dd9eccc2"
+    },
+    {
+      "kind": "hashOntology",
+      "input": {
+        "roles": [
+          "admin",
+          "viewer"
+        ]
+      },
+      "expected": "0456c4bf6b1aa9"
+    },
+    {
+      "kind": "hashOntology",
+      "input": {
+        "roles": [
+          "viewer",
+          "admin"
+        ]
+      },
+      "expected": "03b6c6567446e1"
+    }
+  ]
+}
