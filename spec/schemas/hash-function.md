@@ -30,12 +30,12 @@ output: 53-битное целое (u64 со старшими 11 битами = 
      h1 := imul32(h1 XOR ch, 0x9e3779b1)   // 2654435761
      h2 := imul32(h2 XOR ch, 0x5f356495)   // 1597334677
 
-3. Финализация:
-     h1' := imul32(h1 XOR (h1 >>> 16), 0x85ebca6b) XOR
-            imul32(h2 XOR (h2 >>> 13), 0xc2b2ae35)
-     h2' := imul32(h2 XOR (h2 >>> 16), 0x85ebca6b) XOR
-            imul32(h1 XOR (h1 >>> 13), 0xc2b2ae35)
-     h1, h2 := h1', h2'
+3. Финализация (sequential dependency — h2 использует уже-обновлённое h1):
+     h1 := imul32(h1 XOR (h1 >>> 16), 0x85ebca6b) XOR
+           imul32(h2 XOR (h2 >>> 13), 0xc2b2ae35)
+     h2 := imul32(h2 XOR (h2 >>> 16), 0x85ebca6b) XOR
+           imul32(h1 XOR (h1 >>> 13), 0xc2b2ae35)
+     // ВАЖНО: вторая строка использует НОВОЕ значение h1, не старое.
 
 4. Сборка результата (u64):
      result := (4294967296 * (h2 AND 0x1fffff)) + h1
