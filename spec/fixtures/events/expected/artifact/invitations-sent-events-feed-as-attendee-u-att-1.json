@@ -9,7 +9,8 @@
   "viewer": "attendee",
   "slots": {
     "body": {
-      "entries": []
+      "entries": [],
+      "itemDisplay": { "primary": "title", "secondary": "startsAt" }
     }
   }
 }
