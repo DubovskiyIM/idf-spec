@@ -82,16 +82,20 @@ for (let i = 0; i < args.length; i++) {
 
 /**
  * Каждый stack описывает: id, как найти бинарник (или способ запустить),
- * и как вызывать. Для случаев когда есть и .worktrees/emit-mode/ и main checkout,
- * предпочитаем worktree (там --emit может быть только что добавлен и ещё не merged).
+ * и как вызывать. Worktrees с in-flight feature'ами (hash-emit, emit-mode)
+ * проверяются в первую очередь — там CLI может быть только что обновлён и
+ * ещё не merged'нут в main.
  */
 const STACKS = [
   {
     id: "go",
     findRunner() {
-      const wt = join(REPOS_ROOT, "idf-go/.worktrees/emit-mode");
-      const main = join(REPOS_ROOT, "idf-go");
-      for (const root of [wt, main]) {
+      const candidates = [
+        join(REPOS_ROOT, "idf-go/.worktrees/hash-emit"),
+        join(REPOS_ROOT, "idf-go/.worktrees/emit-mode"),
+        join(REPOS_ROOT, "idf-go"),
+      ];
+      for (const root of candidates) {
         if (existsSync(join(root, "cmd/conformance/main.go"))) {
           return { kind: "go-run", cwd: root };
         }
@@ -108,9 +112,12 @@ const STACKS = [
   {
     id: "rust",
     findRunner() {
-      const wt = join(REPOS_ROOT, "idf-rust/.worktrees/emit-mode/target/release/conformance");
-      const main = join(REPOS_ROOT, "idf-rust/target/release/conformance");
-      for (const bin of [wt, main]) {
+      const candidates = [
+        join(REPOS_ROOT, "idf-rust/.worktrees/hash-emit/target/release/conformance"),
+        join(REPOS_ROOT, "idf-rust/.worktrees/emit-mode/target/release/conformance"),
+        join(REPOS_ROOT, "idf-rust/target/release/conformance"),
+      ];
+      for (const bin of candidates) {
         if (existsSync(bin)) return { kind: "binary", bin };
       }
       return null;
@@ -122,9 +129,12 @@ const STACKS = [
   {
     id: "swift",
     findRunner() {
-      const wt = join(REPOS_ROOT, "idf-swift/.worktrees/emit-mode/.build/release/conformance");
-      const main = join(REPOS_ROOT, "idf-swift/.build/release/conformance");
-      for (const bin of [wt, main]) {
+      const candidates = [
+        join(REPOS_ROOT, "idf-swift/.worktrees/hash-emit/.build/release/conformance"),
+        join(REPOS_ROOT, "idf-swift/.worktrees/emit-mode/.build/release/conformance"),
+        join(REPOS_ROOT, "idf-swift/.build/release/conformance"),
+      ];
+      for (const bin of candidates) {
         if (existsSync(bin)) return { kind: "binary", bin };
       }
       return null;
