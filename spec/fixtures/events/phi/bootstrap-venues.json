@@ -9,13 +9,13 @@
       "kind": "create",
       "entity": "Venue",
       "fields": { "id": "v1", "name": "Conference Room A", "capacity": 30 },
-      "context": { "at": "2026-04-01T08:00:00.000Z", "initiator": "u-admin-1" }
+      "context": { "at": "2026-04-01T08:00:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" }
     },
     {
       "kind": "create",
       "entity": "Venue",
       "fields": { "id": "v2", "name": "Auditorium", "capacity": 200 },
-      "context": { "at": "2026-04-01T08:01:00.000Z", "initiator": "u-admin-1" }
+      "context": { "at": "2026-04-01T08:01:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" }
     }
   ]
 }

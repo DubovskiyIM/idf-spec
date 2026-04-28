@@ -5,20 +5,20 @@
     "description": "invitations-sent + Alice accepts (Attendee a1 → accepted) + Bob declines (a2 → declined). respondedAt заполняется."
   },
   "effects": [
-    { "kind": "create", "entity": "Venue", "fields": { "id": "v1", "name": "Conference Room A", "capacity": 30 }, "context": { "at": "2026-04-01T08:00:00.000Z", "initiator": "u-admin-1" } },
-    { "kind": "create", "entity": "Venue", "fields": { "id": "v2", "name": "Auditorium", "capacity": 200 }, "context": { "at": "2026-04-01T08:01:00.000Z", "initiator": "u-admin-1" } },
-    { "kind": "create", "entity": "User", "fields": { "id": "u-org-1", "name": "Olivia Organizer" }, "context": { "at": "2026-04-01T09:00:00.000Z", "initiator": "u-admin-1" } },
+    { "kind": "create", "entity": "Venue", "fields": { "id": "v1", "name": "Conference Room A", "capacity": 30 }, "context": { "at": "2026-04-01T08:00:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" } },
+    { "kind": "create", "entity": "Venue", "fields": { "id": "v2", "name": "Auditorium", "capacity": 200 }, "context": { "at": "2026-04-01T08:01:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" } },
+    { "kind": "create", "entity": "User", "fields": { "id": "u-org-1", "name": "Olivia Organizer" }, "context": { "at": "2026-04-01T09:00:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" } },
     {
       "kind": "create",
       "entity": "Event",
       "fields": { "id": "e1", "title": "Quarterly Planning", "organizerId": "u-org-1", "venueId": "v1", "startsAt": "2026-05-01T14:00:00.000Z", "endsAt": "2026-05-01T16:00:00.000Z", "status": "draft" },
-      "context": { "at": "2026-04-02T10:00:00.000Z", "initiator": "u-org-1", "intentId": "create_event" }
+      "context": { "at": "2026-04-02T10:00:00.000Z", "initiator": "u-org-1", "intentId": "create_event", "schemaVersion": "157d1cacf37eaa" }
     },
-    { "kind": "create", "entity": "User", "fields": { "id": "u-att-1", "name": "Alice Attendee" }, "context": { "at": "2026-04-03T09:00:00.000Z", "initiator": "u-admin-1" } },
-    { "kind": "create", "entity": "User", "fields": { "id": "u-att-2", "name": "Bob Attendee" }, "context": { "at": "2026-04-03T09:01:00.000Z", "initiator": "u-admin-1" } },
-    { "kind": "create", "entity": "Attendee", "fields": { "id": "a1", "eventId": "e1", "userId": "u-att-1", "status": "invited" }, "context": { "at": "2026-04-03T10:00:00.000Z", "initiator": "u-org-1", "intentId": "invite_user" } },
-    { "kind": "create", "entity": "Attendee", "fields": { "id": "a2", "eventId": "e1", "userId": "u-att-2", "status": "invited" }, "context": { "at": "2026-04-03T10:01:00.000Z", "initiator": "u-org-1", "intentId": "invite_user" } },
-    { "kind": "transition", "entity": "Attendee", "fields": { "id": "a1", "status": "accepted", "respondedAt": "2026-04-04T11:00:00.000Z" }, "context": { "at": "2026-04-04T11:00:00.000Z", "initiator": "u-att-1", "intentId": "accept_invite" } },
-    { "kind": "transition", "entity": "Attendee", "fields": { "id": "a2", "status": "declined", "respondedAt": "2026-04-04T12:00:00.000Z" }, "context": { "at": "2026-04-04T12:00:00.000Z", "initiator": "u-att-2", "intentId": "decline_invite" } }
+    { "kind": "create", "entity": "User", "fields": { "id": "u-att-1", "name": "Alice Attendee" }, "context": { "at": "2026-04-03T09:00:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" } },
+    { "kind": "create", "entity": "User", "fields": { "id": "u-att-2", "name": "Bob Attendee" }, "context": { "at": "2026-04-03T09:01:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" } },
+    { "kind": "create", "entity": "Attendee", "fields": { "id": "a1", "eventId": "e1", "userId": "u-att-1", "status": "invited" }, "context": { "at": "2026-04-03T10:00:00.000Z", "initiator": "u-org-1", "intentId": "invite_user", "schemaVersion": "157d1cacf37eaa" } },
+    { "kind": "create", "entity": "Attendee", "fields": { "id": "a2", "eventId": "e1", "userId": "u-att-2", "status": "invited" }, "context": { "at": "2026-04-03T10:01:00.000Z", "initiator": "u-org-1", "intentId": "invite_user", "schemaVersion": "157d1cacf37eaa" } },
+    { "kind": "transition", "entity": "Attendee", "fields": { "id": "a1", "status": "accepted", "respondedAt": "2026-04-04T11:00:00.000Z" }, "context": { "at": "2026-04-04T11:00:00.000Z", "initiator": "u-att-1", "intentId": "accept_invite", "schemaVersion": "157d1cacf37eaa" } },
+    { "kind": "transition", "entity": "Attendee", "fields": { "id": "a2", "status": "declined", "respondedAt": "2026-04-04T12:00:00.000Z" }, "context": { "at": "2026-04-04T12:00:00.000Z", "initiator": "u-att-2", "intentId": "decline_invite", "schemaVersion": "157d1cacf37eaa" } }
   ]
 }

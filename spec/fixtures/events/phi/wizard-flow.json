@@ -5,32 +5,32 @@
     "description": "bootstrap-venues + organizer выполняет полный wizard chain для Event e2: start_event_planning (create draft) → add_event_details (replace с venueId/startsAt/endsAt) → confirm_event_schedule (transition draft→scheduled + commit α). Нагружает wizard архетип и commit α."
   },
   "effects": [
-    { "kind": "create", "entity": "Venue", "fields": { "id": "v1", "name": "Conference Room A", "capacity": 30 }, "context": { "at": "2026-04-01T08:00:00.000Z", "initiator": "u-admin-1" } },
-    { "kind": "create", "entity": "Venue", "fields": { "id": "v2", "name": "Auditorium", "capacity": 200 }, "context": { "at": "2026-04-01T08:01:00.000Z", "initiator": "u-admin-1" } },
-    { "kind": "create", "entity": "User", "fields": { "id": "u-org-1", "name": "Olivia Organizer" }, "context": { "at": "2026-04-01T09:00:00.000Z", "initiator": "u-admin-1" } },
+    { "kind": "create", "entity": "Venue", "fields": { "id": "v1", "name": "Conference Room A", "capacity": 30 }, "context": { "at": "2026-04-01T08:00:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" } },
+    { "kind": "create", "entity": "Venue", "fields": { "id": "v2", "name": "Auditorium", "capacity": 200 }, "context": { "at": "2026-04-01T08:01:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" } },
+    { "kind": "create", "entity": "User", "fields": { "id": "u-org-1", "name": "Olivia Organizer" }, "context": { "at": "2026-04-01T09:00:00.000Z", "initiator": "u-admin-1", "schemaVersion": "157d1cacf37eaa" } },
     {
       "kind": "create",
       "entity": "Event",
       "fields": { "id": "e2", "title": "Annual Summit", "organizerId": "u-org-1", "status": "draft" },
-      "context": { "at": "2026-04-05T10:00:00.000Z", "initiator": "u-org-1", "intentId": "start_event_planning" }
+      "context": { "at": "2026-04-05T10:00:00.000Z", "initiator": "u-org-1", "intentId": "start_event_planning", "schemaVersion": "157d1cacf37eaa" }
     },
     {
       "kind": "replace",
       "entity": "Event",
       "fields": { "id": "e2", "venueId": "v2", "startsAt": "2026-06-15T09:00:00.000Z", "endsAt": "2026-06-15T18:00:00.000Z" },
-      "context": { "at": "2026-04-05T10:05:00.000Z", "initiator": "u-org-1", "intentId": "add_event_details" }
+      "context": { "at": "2026-04-05T10:05:00.000Z", "initiator": "u-org-1", "intentId": "add_event_details", "schemaVersion": "157d1cacf37eaa" }
     },
     {
       "kind": "transition",
       "entity": "Event",
       "fields": { "id": "e2", "status": "scheduled" },
-      "context": { "at": "2026-04-05T10:10:00.000Z", "initiator": "u-org-1", "intentId": "confirm_event_schedule" }
+      "context": { "at": "2026-04-05T10:10:00.000Z", "initiator": "u-org-1", "intentId": "confirm_event_schedule", "schemaVersion": "157d1cacf37eaa" }
     },
     {
       "kind": "commit",
       "entity": "Event",
       "fields": { "id": "e2" },
-      "context": { "at": "2026-04-05T10:10:00.001Z", "initiator": "u-org-1", "intentId": "confirm_event_schedule" }
+      "context": { "at": "2026-04-05T10:10:00.001Z", "initiator": "u-org-1", "intentId": "confirm_event_schedule", "schemaVersion": "157d1cacf37eaa" }
     }
   ]
 }
