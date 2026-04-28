@@ -1,0 +1,90 @@
+name: cross-stack-diff
+
+# Runtime-проверка §1 манифеста v2 (Часть IV: четыре читателя формата) и
+# слабая форма §23 axiom 5 (reader-equivalence): три референс-имплементации
+# IDF (idf-go / idf-rust / idf-swift) должны выдавать изоморфный JSON
+# на одних и тех же fixtures (events, library).
+#
+# Подробно — docs/cross-stack-conformance.md.
+
+on:
+  push:
+    branches: [feat/admin-pattern, main]
+  pull_request:
+    branches: [feat/admin-pattern, main]
+  workflow_dispatch:
+
+jobs:
+  diff:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout idf-spec
+        uses: actions/checkout@v4
+        with:
+          path: idf-spec
+
+      - name: Checkout idf-go
+        uses: actions/checkout@v4
+        with:
+          repository: DubovskiyIM/idf-go
+          path: idf-go
+
+      - name: Checkout idf-rust
+        uses: actions/checkout@v4
+        with:
+          repository: DubovskiyIM/idf-rust
+          path: idf-rust
+
+      - name: Checkout idf-swift
+        uses: actions/checkout@v4
+        with:
+          repository: DubovskiyIM/idf-swift
+          path: idf-swift
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Swift 6.2
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: '6.2'
+
+      - name: Build idf-go conformance
+        working-directory: idf-go
+        run: go build -o cmd/conformance/conformance ./cmd/conformance
+
+      - name: Build idf-rust conformance (release)
+        working-directory: idf-rust
+        run: cargo build --release --bin conformance
+
+      - name: Build idf-swift conformance (release)
+        working-directory: idf-swift
+        run: |
+          # Создать пустой Tests/IDFSpecTests/ если отсутствует — Package.swift
+          # декларирует test target без явного path.
+          mkdir -p Tests/IDFSpecTests
+          swift build -c release --product conformance
+
+      - name: Run cross-stack diff
+        working-directory: idf-spec
+        env:
+          REPOS_ROOT: ${{ github.workspace }}
+        run: node scripts/cross-stack-diff.mjs
+
+      - name: Run cross-stack diff (JSON, на случай drift'а)
+        if: failure()
+        working-directory: idf-spec
+        env:
+          REPOS_ROOT: ${{ github.workspace }}
+        run: node scripts/cross-stack-diff.mjs --json || true

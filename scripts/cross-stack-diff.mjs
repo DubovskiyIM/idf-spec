@@ -50,7 +50,10 @@ function findReposRoot(start) {
   }
   return resolve(start, "..");
 }
-const REPOS_ROOT = findReposRoot(SPEC_ROOT);
+// Env override для CI: REPOS_ROOT=/path/to/checkouts (где лежат idf-go, idf-rust, idf-swift).
+const REPOS_ROOT = process.env.REPOS_ROOT
+  ? resolve(process.env.REPOS_ROOT)
+  : findReposRoot(SPEC_ROOT);
 
 // --- args -------------------------------------------------------------------
 
