@@ -89,6 +89,14 @@ Harness ищет сборки в этом порядке:
 
 Запуск: `node scripts/harness-self-test.mjs`. CI workflow прогоняет self-test перед main cross-stack-diff. Если diff-логика drift'ит от спеки (e.g., чей-то PR изменит `semanticEqual`), self-test падает первым и блокирует.
 
+## Default conformance matrix
+
+`scripts/default-conformance.mjs` — дополнительный layer проверки. Каждый stack runs в default-mode (без `--emit`) против `spec/fixtures/<domain>/expected/*`, для каждого домена. Цель — поймать случай когда **все 3 стэка одинаково drift'ят от expected/***: cross-stack-diff (выше) сравнивает stack'и попарно между собой и пройдёт зелёным даже в этом случае. Default conformance independently валидирует каждый stack против spec'овского expected/*.
+
+Прецедент: events/feed `itemDisplay` drift (PR #13) — все 3 стэка вычисляли одинаковую `itemDisplay` derivation, но `expected/artifact/*.json` её не включал. Cross-stack-diff пропустил этот случай; default-mode conformance бы его сразу surface'ил.
+
+Запуск: `node scripts/default-conformance.mjs`. CI step добавлен после cross-stack diff. Iterate'ит `spec/fixtures/*` автоматически — новый домен подхватывается без правки workflow.
+
 ## Reference stack
 
 Первый из доступных stack'ов берётся как «золотой»: остальные сравниваются с ним. Сейчас это idf-go (самая зрелая реализация — v0.1.3, единственная прошедшая v0.1.4 feed/wizard fill rules).
