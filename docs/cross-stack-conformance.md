@@ -70,6 +70,25 @@ Harness ищет сборки в этом порядке:
 
 Если бинарника нет — stack пропускается. Harness требует ≥2 доступных stack'а; иначе exit code 2.
 
+## Self-test (proof-of-signal)
+
+`scripts/harness-self-test.mjs` — отдельный скрипт, проверяющий что diff-логика **имеет signal**, а не always returns no-drift. На synthetic dirs прогоняет 10 случаев:
+
+| # | Случай | Ожидаемое |
+|---|---|---|
+| 1 | Two identical dirs | no drift |
+| 2 | Missing file in B | 1 missing-in drift on B side |
+| 3 | Extra file in B | 1 missing-in drift on ref side |
+| 4 | Different content | content-mismatch |
+| 5 | `_meta` differs only | no drift (semantic-eq ignores) |
+| 6 | Object key order swapped | no drift |
+| 7 | Array order swapped | content-mismatch |
+| 8 | Both empty | no drift |
+| 9 | Deeply nested files | walked correctly |
+| 10 | Number vs string of same value | content-mismatch |
+
+Запуск: `node scripts/harness-self-test.mjs`. CI workflow прогоняет self-test перед main cross-stack-diff. Если diff-логика drift'ит от спеки (e.g., чей-то PR изменит `semanticEqual`), self-test падает первым и блокирует.
+
 ## Reference stack
 
 Первый из доступных stack'ов берётся как «золотой»: остальные сравниваются с ним. Сейчас это idf-go (самая зрелая реализация — v0.1.3, единственная прошедшая v0.1.4 feed/wizard fill rules).

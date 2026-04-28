@@ -76,6 +76,10 @@ jobs:
           mkdir -p Tests/IDFSpecTests
           swift build -c release --product conformance
 
+      - name: Self-test harness diff-логики
+        working-directory: idf-spec
+        run: node scripts/harness-self-test.mjs
+
       - name: Run cross-stack diff
         working-directory: idf-spec
         env:
