@@ -92,3 +92,15 @@ jobs:
         env:
           REPOS_ROOT: ${{ github.workspace }}
         run: node scripts/cross-stack-diff.mjs --json || true
+
+      # Default-mode conformance — каждый stack сравнивает свой выход с
+      # idf-spec/spec/fixtures/<domain>/expected/*. cross-stack-diff
+      # (выше) сравнивает stack'и попарно между собой и пройдёт зелёным
+      # даже если все 3 стэка одинаково drift'ят от expected/* (как
+      # случилось с events/feed itemDisplay перед PR #13). Этот step
+      # ловит такой случай и блокирует.
+      - name: Default conformance — каждый stack × каждый домен
+        working-directory: idf-spec
+        env:
+          REPOS_ROOT: ${{ github.workspace }}
+        run: node scripts/default-conformance.mjs
