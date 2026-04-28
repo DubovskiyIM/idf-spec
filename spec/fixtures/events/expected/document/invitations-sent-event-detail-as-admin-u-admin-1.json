@@ -1,0 +1,31 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "event-detail admin для e1. status — enum field → badge."
+  },
+  "kind": "document",
+  "projectionId": "event-detail",
+  "archetype": "detail",
+  "viewer": "admin",
+  "title": "Quarterly Planning",
+  "sections": [
+    { "kind": "header", "content": { "title": "Quarterly Planning" } },
+    { "kind": "fields", "content": [
+      { "name": "id",          "value": "e1" },
+      { "name": "title",       "value": "Quarterly Planning" },
+      { "name": "organizerId", "value": "u-org-1" },
+      { "name": "venueId",     "value": "v1" },
+      { "name": "startsAt",    "value": "2026-05-01T14:00:00.000Z" },
+      { "name": "endsAt",      "value": "2026-05-01T16:00:00.000Z" },
+      { "name": "status",      "value": "draft", "badge": "draft" }
+    ]},
+    { "kind": "actions", "content": [
+      { "intentId": "accept_invite", "label": "accept_invite", "confirmation": "standard" },
+      { "intentId": "cancel_event", "label": "cancel_event", "confirmation": "standard" },
+      { "intentId": "decline_invite", "label": "decline_invite", "confirmation": "standard" },
+      { "intentId": "edit_event", "label": "edit_event", "confirmation": "standard" },
+      { "intentId": "invite_user", "label": "invite_user", "confirmation": "standard" }
+    ]}
+  ]
+}

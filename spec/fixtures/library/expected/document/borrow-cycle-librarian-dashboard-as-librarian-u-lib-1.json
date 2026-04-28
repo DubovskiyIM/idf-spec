@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "librarian-dashboard. toolbar.actions sorted by intent.id: add_book / cancel_loan (destructive) / register_user."
+  },
+  "kind": "document",
+  "projectionId": "librarian-dashboard",
+  "archetype": "dashboard",
+  "viewer": "librarian",
+  "title": "librarian-dashboard",
+  "sections": [
+    { "kind": "header", "content": { "title": "librarian-dashboard" } },
+    { "kind": "actions", "content": [
+      { "intentId": "add_book", "label": "add_book", "confirmation": "standard" },
+      { "intentId": "cancel_loan", "label": "cancel_loan", "confirmation": "destructive", "badge": "destructive" },
+      { "intentId": "register_user", "label": "register_user", "confirmation": "standard" }
+    ]}
+  ]
+}

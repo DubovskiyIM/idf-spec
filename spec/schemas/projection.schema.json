@@ -18,10 +18,10 @@
       "default": "auto"
     },
     "intents": {
-      "description": "Список intent.id, входящих в проекцию.",
+      "description": "Список intent.id, входящих в проекцию. Может быть пустым для read-only проекций (например, archetype='feed' без actions). v0.1.4: minItems снят (был 1) — read-only feeds легитимны.",
       "type": "array",
       "items": { "type": "string" },
-      "minItems": 1,
+      "minItems": 0,
       "uniqueItems": true
     },
     "entity": {

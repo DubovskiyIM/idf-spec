@@ -1,7 +1,7 @@
 {
   "_meta": {
     "specVersion": "0.1",
-    "manifestSha256": "b97236e7115fc551cbf2ce22332a935a6e195752e924f35f5ec976a143b950df",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
     "description": "Empty Φ + librarian view = пустые namespace'ы (User/Book/Loan все в visibleFields)."
   },
   "viewerWorld": {

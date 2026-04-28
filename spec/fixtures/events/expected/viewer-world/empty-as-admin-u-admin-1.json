@@ -1,0 +1,8 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "Empty + admin: 4 пустых namespace."
+  },
+  "viewerWorld": { "User": {}, "Venue": {}, "Event": {}, "Attendee": {} }
+}

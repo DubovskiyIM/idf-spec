@@ -30,9 +30,17 @@ L1 плюс:
 
 L2-conformance проверяется fixture-векторами [`fixtures/library/expected/artifact/`](fixtures/library/expected/artifact/).
 
-### L3 — Four materializations (Reserved для v0.2+)
+### L3 — Four materializations + Schema evolution (частично нормировано в v0.2.0+)
 
-L2 плюс четыре равноправных читателя artifact'а: pixel, voice, agent API, document. Все используют единый `filterWorldForRole`. v0.1 не нормирует.
+L2 плюс четыре равноправных читателя artifact'а: pixel, voice, agent API, document. Все используют единый `filterWorldForRole`.
+
+L3 разбит на под-классы, нормируемые независимо:
+
+- **L3-document** (v0.2.0): document материализация нормирована — см. [`05-materializations/document.md`](05-materializations/document.md). Conformance проверяется `expected/document/` для library и events.
+- **L3-evolution** (v0.3.0-draft): schema evolution + reader gap policy + Layer 4 drift detector — см. [`06-evolution.md`](06-evolution.md). Conformance проверяется `fixtures/evolution/` (TBD как follow-up).
+- **L3-voice / L3-agent**: Reserved.
+
+Полный L3 = L3-document + L3-evolution + L3-voice + L3-agent.
 
 ### L4 — Full (Reserved для v0.2+)
 

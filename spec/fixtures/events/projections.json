@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "specVersion": "0.1",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "4 проекции events: events-feed (feed архетип), event-detail, invite-form (со slot-override), event-planning-wizard (wizard архетип). Покрывает 4 архетипа из 7."
+  },
+  "projections": [
+    {
+      "id": "events-feed",
+      "archetype": "feed",
+      "entity": "Event",
+      "intents": []
+    },
+    {
+      "id": "event-detail",
+      "archetype": "detail",
+      "entity": "Event",
+      "intents": ["edit_event", "cancel_event", "invite_user", "accept_invite", "decline_invite"]
+    },
+    {
+      "id": "invite-form",
+      "archetype": "form",
+      "entity": "Attendee",
+      "intents": ["invite_user"],
+      "slots": {
+        "body": {
+          "_authored": true,
+          "fields": ["userId"]
+        }
+      }
+    },
+    {
+      "id": "event-planning-wizard",
+      "archetype": "wizard",
+      "entity": "Event",
+      "intents": ["start_event_planning", "add_event_details", "confirm_event_schedule"]
+    }
+  ]
+}

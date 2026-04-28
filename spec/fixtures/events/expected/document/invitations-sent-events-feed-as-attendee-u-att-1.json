@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "events-feed attendee Alice: пустой feed (B-1 cascade)."
+  },
+  "kind": "document",
+  "projectionId": "events-feed",
+  "archetype": "feed",
+  "viewer": "attendee",
+  "title": "Event feed",
+  "sections": [
+    { "kind": "header", "content": { "title": "Event feed" } },
+    { "kind": "table", "content": {
+      "columns": ["title", "startsAt"],
+      "rows": []
+    }}
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "my-loans для Bob — пустая таблица; action return_book доступен."
+  },
+  "kind": "document",
+  "projectionId": "my-loans",
+  "archetype": "catalog",
+  "viewer": "reader",
+  "title": "Loan catalog",
+  "sections": [
+    { "kind": "header", "content": { "title": "Loan catalog" } },
+    { "kind": "table", "content": {
+      "columns": ["status", "borrowedAt"],
+      "rows": []
+    }},
+    { "kind": "actions", "content": [
+      { "intentId": "return_book", "label": "return_book", "confirmation": "standard" }
+    ]}
+  ]
+}

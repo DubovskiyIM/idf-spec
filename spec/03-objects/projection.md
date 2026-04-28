@@ -21,7 +21,7 @@ JSON Schema: [`schemas/projection.schema.json`](../schemas/projection.schema.jso
 |-------------|--------|-------------|----------|
 | `id`        | string | MUST        | Стабильный ID, `kebab-case`. |
 | `archetype` | enum   | SHOULD      | Один из семи + `auto`. Default `auto`. |
-| `intents`   | array  | MUST        | Минимум один `intent.id`. |
+| `intents`   | array  | MUST        | Список `intent.id`. **Может быть пустым** для read-only проекций (например, feed-timeline без actions). v0.1.4 снял ограничение minItems=1.|
 | `entity`    | string | MAY         | Основная сущность (для catalog/detail/form). |
 | `slots`     | object | MAY         | Slot-override (см. ниже). |
 | `patterns`  | object | MAY         | Reserved L4. |

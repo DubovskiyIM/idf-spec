@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "specVersion": "0.2.0",
+    "manifestSha256": "6f204b7f139fcdfea9144b84c5c226d45a6e1e38fe8cd09763473b43d3f3e6fb",
+    "description": "materializeAsDocument для borrow-form reader. Form со slot-override (body.fields = ['bookId'] — простые имена)."
+  },
+  "kind": "document",
+  "projectionId": "borrow-form",
+  "archetype": "form",
+  "viewer": "reader",
+  "title": "borrow_book",
+  "sections": [
+    { "kind": "header", "content": { "title": "borrow_book" } },
+    { "kind": "fields", "content": [
+      { "name": "bookId" }
+    ]},
+    { "kind": "actions", "content": [
+      { "intentId": "borrow_book", "label": "submit: borrow_book", "confirmation": "standard" }
+    ]}
+  ]
+}
