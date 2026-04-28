@@ -58,3 +58,7 @@ idf-spec/
 ## Язык
 
 Спека и документация — на **русском**, как и манифест. JSON Schema field names и normative термины — `lower-camelCase` английские (`ontology`, `effect`, `confirmedAt`).
+
+## Cross-stack diff harness
+
+`scripts/cross-stack-diff.mjs` — differential test поверх трёх референс-импл'ов (idf-go / idf-rust / idf-swift). Каждый stack должен поддерживать `conformance <dir> --emit <out>`; harness pair-wise semantic-сравнивает выход. Подробно — [`docs/cross-stack-conformance.md`](docs/cross-stack-conformance.md).
