@@ -36,9 +36,91 @@
     "rules": {
       "description": "Reserved для v0.2+ (Reactive Rules Engine с 4 расширениями). v0.1 принимает поле как opaque массив.",
       "type": "array"
+    },
+    "evolution": {
+      "description": "L3-evolution conformance class — append-only лог эволюции онтологии. См. spec/06-evolution.md §2. Поле НЕ включается в hashOntology (см. spec/schemas/hash-function.md §2 step 0). v0.1 (без L3-evolution conformance) принимает поле как opaque массив; для L3-evolution-conformant impl каждый элемент валидируется как OntologyVersion.",
+      "type": "array",
+      "items": { "$ref": "#/definitions/ontologyVersion" }
     }
   },
   "definitions": {
+    "ontologyVersion": {
+      "description": "Запись в evolution log. См. spec/06-evolution.md §2.",
+      "type": "object",
+      "required": ["hash", "parentHash", "timestamp", "authorId"],
+      "additionalProperties": false,
+      "properties": {
+        "hash": {
+          "description": "14-char lowercase hex — результат hashOntology(ontology_at_that_time). SHOULD совпадать с rehash; implementer MAY валидировать через independent re-hash.",
+          "type": "string",
+          "pattern": "^[0-9a-f]{14}$"
+        },
+        "parentHash": {
+          "description": "Hash предыдущей версии или null для root entry. Цепочка от root до любой версии MUST быть достижима без циклов.",
+          "oneOf": [
+            { "type": "string", "pattern": "^[0-9a-f]{14}$" },
+            { "type": "null" }
+          ]
+        },
+        "timestamp": {
+          "description": "ISO 8601 UTC timestamp создания версии.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "authorId": {
+          "description": "Идентификатор автора версии (любая непустая строка).",
+          "type": "string",
+          "minLength": 1
+        },
+        "diff": {
+          "description": "Информационное описание изменений от parent до этой версии. Все массивы MAY быть пустыми или отсутствовать (трактуется как пустой).",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "addedFields": { "type": "array" },
+            "removedFields": { "type": "array" },
+            "renamedFields": { "type": "array" },
+            "enumChanges": { "type": "array" },
+            "splitEntities": { "type": "array" },
+            "roleChanges": { "type": "array" },
+            "invariantsAdded": { "type": "array", "items": { "type": "string" } },
+            "invariantsRemoved": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "upcasters": {
+          "description": "Массив Upcaster-объектов, каждый описывает шаг fromHash → toHash. Empty для root entry. См. spec/06-evolution.md §3.",
+          "type": "array",
+          "items": { "$ref": "#/definitions/upcaster" }
+        }
+      }
+    },
+    "upcaster": {
+      "description": "Шаг трансформации эффекта при upcast'е (§3 evolution). v0.1 определяет shape; semantics реализации L3-evolution-conformant.",
+      "type": "object",
+      "required": ["fromHash", "toHash"],
+      "additionalProperties": false,
+      "properties": {
+        "fromHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{14}$"
+        },
+        "toHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{14}$"
+        },
+        "declarative": {
+          "description": "Декларативные трансформации; реализация MUST применять их в порядке: rename → splitDiscriminator → setDefault → enumMap.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "rename": { "type": "array" },
+            "splitDiscriminator": { "type": "array" },
+            "setDefault": { "type": "array" },
+            "enumMap": { "type": "array" }
+          }
+        }
+      }
+    },
     "entity": {
       "type": "object",
       "required": ["fields"],
