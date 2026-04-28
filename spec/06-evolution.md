@@ -32,12 +32,19 @@
 
 `schemaVersion` **MUST** быть результатом `hashOntology(ontology_at_confirm_time)`, где `hashOntology` — детерминированная функция:
 
+0. **Strip top-level `evolution`** (см. ниже): top-level поле `evolution` исключается из хэшируемого input'а до canonicalize. Это необходимо чтобы `entry.hash` в §2 не был self-referential.
 1. **Canonicalize**: рекурсивная сортировка ключей объектов; массивы сохраняют порядок (он семантичен).
 2. **Serialize**: `JSON.stringify` канонизированной формы.
 3. **Hash**: cyrb53 (53-bit pure-JS hash, см. [`schemas/hash-function.md`](schemas/hash-function.md)) поверх serialized строки.
 4. **Format**: hex zero-pad до 14 символов.
 
 **Cross-stack импл'ы MUST соблюдать тот же алгоритм.** Замена hash-функции (например на SHA-256) — отдельный versioning-event самой функции, требующий координации всех stack'ов.
+
+### Why strip evolution
+
+`entry.hash` в §2 нормативно равен `hashOntology(ontology_at_that_time)`. Если бы `hashOntology` включал `evolution[]`, то для root-entry это создавало бы самореферентный паттерн: `entry.hash = hashOntology(ontology_with_this_entry_in_evolution)`, что технически невозможно без fixed-point iteration.
+
+Strip делает hash стабильным относительно changes в evolution log: добавление новых entry'ев в `ontology.evolution` **не invalidate'ит** существующие `schemaVersion` в Φ. Это и есть желаемое свойство — schema эволюция, рассматриваемая как метаданные, не должна влиять на fingerprint самой schema.
 
 ---
 

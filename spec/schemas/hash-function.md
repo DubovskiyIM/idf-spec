@@ -79,13 +79,26 @@ output: 14-character lowercase hex string
 1. Если ontology == null:
      return "00000000000000"
 
-2. canonical := canonicalize(ontology)
+2. ontology' := strip_top_level(ontology, "evolution")
+     // Top-level поле "evolution" (см. 06-evolution.md §2 — append-only
+     // эволюционный лог) ИСКЛЮЧАЕТСЯ из хэшируемого input'а. Если поле
+     // отсутствует — ontology' идентична ontology.
+     //
+     // Why: entry.hash в evolution[] нормативно равен
+     // hashOntology(ontology_at_that_time). Если бы hashOntology
+     // включал evolution[], это создавало бы self-referential паттерн —
+     // невозможно для root entry. Исключение делает hash стабильным
+     // относительно changes в evolution log, что и есть желаемое
+     // свойство (добавление эволюционных entry'ев не invalidate'ит
+     // существующие schemaVersion в Φ).
+
+3. canonical := canonicalize(ontology')
      // см. §2.1
 
-3. serialized := JSON.stringify(canonical)
-     // RFC 8259 stringification без пробелов; ключи уже отсортированы шагом 2
+4. serialized := JSON.stringify(canonical)
+     // RFC 8259 stringification без пробелов; ключи уже отсортированы шагом 3
 
-4. h := cyrb53(serialized, seed=0)
+5. h := cyrb53(serialized, seed=0)
 
 5. return hex_pad14(h)
 ```
@@ -157,6 +170,8 @@ Test-vectors §4 покрывают только ASCII, но cross-stack-diff ha
 | `hashOntology({c:3,a:1,b:2})` | `167bc0dd9eccc2` (=, order-independent) |
 | `hashOntology({roles:["admin","viewer"]})` | `0456c4bf6b1aa9` |
 | `hashOntology({roles:["viewer","admin"]})` | `03b6c6567446e1` (≠, array order matters) |
+| `hashOntology({evolution:[]})` | `1bc27f5a56d1e7` (=, evolution stripped) |
+| `hashOntology({a:1,b:2,c:3, evolution:[{...}]})` | `167bc0dd9eccc2` (=, evolution stripped) |
 
 ---
 
