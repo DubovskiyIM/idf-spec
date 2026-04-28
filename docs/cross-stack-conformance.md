@@ -18,6 +18,7 @@ Differential test, который запускает референс-импле
 | L1 filter | `viewer-world/<scenario>-as-<role>-<id>.json` | каждый файл из `expected/viewer-world/` |
 | L2 crystallize | `artifact/<scenario>-<projection>-as-<role>-<id>.json` | каждый файл из `expected/artifact/` |
 | L3 document | `document/<scenario>-<projection>-as-<role>-<id>.json` | каждый файл из `expected/document/` |
+| L3-evolution | `hash/ontology.json` | **один** файл per домен — `{"schemaVersion": hashOntology(raw_ontology)}` |
 
 Имена файлов идентичны для всех 3 stack'ов и совпадают с конвенцией `expected/*` — это упрощает идентификацию drift'а.
 
@@ -38,9 +39,10 @@ conformance <fixtures-dir> --emit <out-dir>
 3. Записать каждый артефакт в `<out>/{world,viewer-world,artifact,document}/<basename>.json`.
 4. Для `world` и `viewer-world` — обернуть в `{"world": ...}` / `{"viewerWorld": ...}` (так же как expected/).
 5. Для `artifact` и `document` — корневой объект напрямую.
-6. Создать недостающие директории. Использовать pretty-print JSON.
+6. **L3-evolution hash** (с 2026-04-28): записать `<out>/hash/ontology.json` = `{"schemaVersion": hashOntology(raw_ontology)}`. Хэш считается на raw JSON-bytes из `ontology.json` (через `JSON.parse → hashOntology`), не на распарсенном struct'е — для cross-stack reproducibility (struct может быть lossy на extra-полях). Алгоритм нормирован в [`spec/schemas/hash-function.md`](../schemas/hash-function.md).
+7. Создать недостающие директории. Использовать pretty-print JSON.
 
-Реализации emit-mode на 2026-04-28: idf-go (`feat/emit-mode`), idf-rust (`feat/emit-mode`), idf-swift (`feat/emit-mode`).
+Реализации emit-mode на 2026-04-28: idf-go / idf-rust / idf-swift main (post-merge `feat/emit-mode` + `feat/hash-emit`).
 
 ## Запуск harness'а
 
