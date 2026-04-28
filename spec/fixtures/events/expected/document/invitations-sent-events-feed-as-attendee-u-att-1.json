@@ -8,9 +8,9 @@
   "projectionId": "events-feed",
   "archetype": "feed",
   "viewer": "attendee",
-  "title": "Event feed",
+  "title": "events-feed",
   "sections": [
-    { "kind": "header", "content": { "title": "Event feed" } },
+    { "kind": "header", "content": { "title": "events-feed" } },
     { "kind": "table", "content": {
       "columns": ["title", "startsAt"],
       "rows": []
