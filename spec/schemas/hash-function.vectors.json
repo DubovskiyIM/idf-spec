@@ -95,6 +95,27 @@
         ]
       },
       "expected": "03b6c6567446e1"
+    },
+    {
+      "kind": "hashOntology",
+      "input": {
+        "evolution": []
+      },
+      "expected": "1bc27f5a56d1e7",
+      "note": "evolution stripped → equivalent to {} → same hash"
+    },
+    {
+      "kind": "hashOntology",
+      "input": {
+        "a": 1,
+        "b": 2,
+        "c": 3,
+        "evolution": [
+          { "hash": "abc123", "parentHash": null }
+        ]
+      },
+      "expected": "167bc0dd9eccc2",
+      "note": "evolution stripped → equivalent to {a:1,b:2,c:3} → same hash regardless of evolution content"
     }
   ]
 }
